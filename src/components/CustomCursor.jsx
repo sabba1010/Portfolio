@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
 
 export default function CustomCursor() {
   const [isTouch] = useState(() => {
@@ -13,16 +14,12 @@ export default function CustomCursor() {
   const [cursorVisible, setCursorVisible] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [hoverType, setHoverType] = useState('default') // 'button' | 'card'
-  const [isClicking, setIsClicking] = useState(false)
 
   // Cursor element refs
   const dotRef = useRef(null)
   const ringRef = useRef(null)
   const canvasRef = useRef(null)
 
-  // Mouse positions for smooth lerp physics
-  const mousePos = useRef({ x: -100, y: -100 })
-  const ringPos = useRef({ x: -100, y: -100 })
   const isVisibleRef = useRef(false)
   const rafId = useRef(null)
 
@@ -47,17 +44,26 @@ export default function CustomCursor() {
     // Enable custom cursor styles on html
     document.documentElement.classList.add('custom-cursor-enabled')
 
+    // GSAP quickTo setters for 120fps GPU performance
+    const xToDot = gsap.quickTo(dotRef.current, 'x', { duration: 0.08, ease: 'power2.out' })
+    const yToDot = gsap.quickTo(dotRef.current, 'y', { duration: 0.08, ease: 'power2.out' })
+
+    const xToRing = gsap.quickTo(ringRef.current, 'x', { duration: 0.38, ease: 'power3.out' })
+    const yToRing = gsap.quickTo(ringRef.current, 'y', { duration: 0.38, ease: 'power3.out' })
+
     // Mouse movement handler
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e
-      mousePos.current.x = clientX
-      mousePos.current.y = clientY
 
       if (!isVisibleRef.current) {
         isVisibleRef.current = true
         setCursorVisible(true)
-        ringPos.current.x = clientX
-        ringPos.current.y = clientY
+        gsap.set([dotRef.current, ringRef.current], { x: clientX, y: clientY })
+      } else {
+        xToDot(clientX)
+        yToDot(clientY)
+        xToRing(clientX)
+        yToRing(clientY)
       }
 
       // Spawn subtle glowing ember stardust particle occasionally on movement
@@ -70,7 +76,7 @@ export default function CustomCursor() {
             x: clientX + (Math.random() - 0.5) * 8,
             y: clientY + (Math.random() - 0.5) * 8,
             vx: (Math.random() - 0.5) * 1.2,
-            vy: -Math.random() * 1.6 - 0.4, // float slightly upward like magma ember
+            vy: -Math.random() * 1.6 - 0.4,
             size: Math.random() * 2.2 + 1.2,
             alpha: 0.85,
             decay: Math.random() * 0.025 + 0.025,
@@ -80,8 +86,17 @@ export default function CustomCursor() {
       }
     }
 
-    const handleMouseDown = () => setIsClicking(true)
-    const handleMouseUp = () => setIsClicking(false)
+    const handleMouseDown = () => {
+      if (ringRef.current) {
+        gsap.to(ringRef.current, { scale: 0.82, duration: 0.15, ease: 'power2.out' })
+      }
+    }
+
+    const handleMouseUp = () => {
+      if (ringRef.current) {
+        gsap.to(ringRef.current, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.38)' })
+      }
+    }
 
     const handleMouseEnter = () => {
       isVisibleRef.current = true
@@ -117,24 +132,8 @@ export default function CustomCursor() {
       }
     }
 
-    // Smooth animation loop: GPU-accelerated translate3d
+    // Canvas particle render loop
     const renderLoop = () => {
-      // 1. Lerp outer fluid ring with silky spring weight
-      const lerpFactor = 0.18
-      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * lerpFactor
-      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * lerpFactor
-
-      // Position inner dot instantly for responsive precision
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${mousePos.current.x}px, ${mousePos.current.y}px, 0)`
-      }
-
-      // Position outer ring with smooth liquid lag
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0)`
-      }
-
-      // 2. Render particle trail on canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       const pList = particles.current
 
@@ -195,21 +194,21 @@ export default function CustomCursor() {
         aria-hidden="true"
       />
 
-      {/* Razor-sharp Core Dot */}
+      {/* Razor-sharp Core Dot with GSAP quickTo */}
       <div
         ref={dotRef}
         className={`cursor-core-dot ${!cursorVisible ? 'cursor-hidden' : ''} ${
           isHovered ? 'dot-hover' : ''
-        } ${isClicking ? 'dot-click' : ''}`}
+        }`}
         aria-hidden="true"
       />
 
-      {/* Smooth Trailing Liquid Halo Ring */}
+      {/* Smooth Trailing Liquid Halo Ring with GSAP quickTo */}
       <div
         ref={ringRef}
         className={`cursor-trailing-ring ${!cursorVisible ? 'cursor-hidden' : ''} ${
           isHovered ? `ring-hover ring-${hoverType}` : ''
-        } ${isClicking ? 'ring-click' : ''}`}
+        }`}
         aria-hidden="true"
       >
         {isHovered && hoverType === 'card' && (

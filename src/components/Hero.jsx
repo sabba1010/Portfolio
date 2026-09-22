@@ -1,12 +1,92 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { ArrowRight, Play, X, ChevronDown, ChevronUp } from 'lucide-react'
 import HeroCanvas from './HeroCanvas'
+import { useGsapContext, applyMagneticEffect } from '../hooks/useGsap'
 
 export default function Hero() {
   const [showreelOpen, setShowreelOpen] = useState(false)
+  const heroRef = useRef(null)
+  const primaryBtnRef = useRef(null)
+  const showreelBtnRef = useRef(null)
+
+  // Stat counter refs
+  const stat1Ref = useRef(null)
+  const stat2Ref = useRef(null)
+  const stat3Ref = useRef(null)
+
+  // Magnetic button effects
+  useEffect(() => {
+    const cleanPrimary = applyMagneticEffect(primaryBtnRef.current, 0.28)
+    const cleanShowreel = applyMagneticEffect(showreelBtnRef.current, 0.28)
+    return () => {
+      cleanPrimary()
+      cleanShowreel()
+    }
+  }, [])
+
+  // GSAP Entrance Timeline & ScrollTrigger Parallax
+  useGsapContext(({ gsap }) => {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 })
+
+    // Staggered reveal of hero content with clearProps so elements stay 100% visible
+    tl.from('.hero-eyebrow-wrap', {
+      opacity: 0,
+      y: 24,
+      duration: 0.7,
+      clearProps: 'all'
+    })
+      .from('.hero-title', {
+        opacity: 0,
+        y: 40,
+        duration: 0.9,
+        clearProps: 'all'
+      }, '-=0.45')
+      .from('.hero-description', {
+        opacity: 0,
+        y: 25,
+        duration: 0.8,
+        clearProps: 'all'
+      }, '-=0.55')
+      .from('.hero-cta-group', {
+        opacity: 0,
+        y: 25,
+        duration: 0.75,
+        clearProps: 'all'
+      }, '-=0.5')
+      .from('.hero-stats-row', {
+        opacity: 0,
+        y: 20,
+        duration: 0.75,
+        clearProps: 'all'
+      }, '-=0.5')
+      .from('.hero-right-visual-wrap', {
+        opacity: 0,
+        scale: 0.94,
+        y: 30,
+        duration: 1.1,
+        ease: 'power2.out',
+        clearProps: 'all'
+      }, '-=0.9')
+
+    // Animated rolling number counters
+    const counterObj = { count1: 0, count2: 0, count3: 0 }
+    gsap.to(counterObj, {
+      count1: 50,
+      count2: 30,
+      count3: 5,
+      duration: 2.2,
+      ease: 'power2.out',
+      delay: 0.5,
+      onUpdate: () => {
+        if (stat1Ref.current) stat1Ref.current.innerText = `${Math.floor(counterObj.count1)}+`
+        if (stat2Ref.current) stat2Ref.current.innerText = `${Math.floor(counterObj.count2)}+`
+        if (stat3Ref.current) stat3Ref.current.innerText = `${Math.floor(counterObj.count3)}+`
+      }
+    })
+  }, [], heroRef)
 
   return (
-    <section id="home" className="hero-section">
+    <section id="home" className="hero-section" ref={heroRef}>
       {/* Three.js 3D Background Magma Embers & Particles */}
       <HeroCanvas />
 
@@ -31,7 +111,11 @@ export default function Hero() {
           </p>
 
           <div className="hero-cta-group">
-            <a href="#contact" className="btn-primary-orange">
+            <a 
+              ref={primaryBtnRef}
+              href="#contact" 
+              className="btn-primary-orange"
+            >
               <span>Start a Project</span>
               <div className="btn-arrow-circle">
                 <ArrowRight size={15} strokeWidth={2.5} />
@@ -39,6 +123,7 @@ export default function Hero() {
             </a>
 
             <button 
+              ref={showreelBtnRef}
               className="btn-showreel"
               onClick={() => setShowreelOpen(true)}
               aria-label="Watch Showreel"
@@ -53,17 +138,17 @@ export default function Hero() {
           {/* Stats Row */}
           <div className="hero-stats-row">
             <div className="stat-item">
-              <span className="stat-value">50+</span>
+              <span className="stat-value" ref={stat1Ref}>0+</span>
               <span className="stat-label">Projects Delivered</span>
             </div>
             <div className="stat-divider" />
             <div className="stat-item">
-              <span className="stat-value">30+</span>
+              <span className="stat-value" ref={stat2Ref}>0+</span>
               <span className="stat-label">Happy Clients</span>
             </div>
             <div className="stat-divider" />
             <div className="stat-item">
-              <span className="stat-value">5+</span>
+              <span className="stat-value" ref={stat3Ref}>0+</span>
               <span className="stat-label">Years of Experience</span>
             </div>
           </div>

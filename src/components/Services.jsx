@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { useGsapContext } from '../hooks/useGsap'
 import { 
   Box, 
   Monitor, 
@@ -90,7 +91,7 @@ function TiltServiceCard({ item, index }) {
 
   return (
     <div 
-      className="service-card reveal-on-scroll"
+      className="service-card"
       style={{
         ...tiltStyle,
         transitionDelay: `${index * 0.08}s`
@@ -126,11 +127,47 @@ function TiltServiceCard({ item, index }) {
 }
 
 export default function Services() {
+  const sectionRef = useRef(null)
+
+  useGsapContext(({ gsap }) => {
+    // Info Column entrance
+    gsap.from('.services-info', {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      },
+      opacity: 0,
+      x: -45,
+      duration: 1,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+
+    // Staggered grid cards entrance
+    gsap.from('.service-card', {
+      scrollTrigger: {
+        trigger: '.services-grid',
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      },
+      opacity: 0,
+      y: 50,
+      scale: 0.96,
+      duration: 0.85,
+      stagger: 0.1,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+  }, [], sectionRef)
+
   return (
-    <section id="services" className="services-section">
+    <section id="services" className="services-section" ref={sectionRef}>
       <div className="container services-layout">
         {/* Left Column */}
-        <div className="services-info reveal-on-scroll">
+        <div className="services-info">
           <span className="eyebrow-tag">WHAT WE DO</span>
           <h2 className="section-title-dark">
             Digital<br />

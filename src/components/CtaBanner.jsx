@@ -1,10 +1,59 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { ArrowRight, Sparkles, Send, CheckCircle, X } from 'lucide-react'
+import { useGsapContext, applyMagneticEffect } from '../hooks/useGsap'
 
 export default function CtaBanner() {
   const [modalOpen, setModalOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const sectionRef = useRef(null)
+  const ctaBtnRef = useRef(null)
+
+  useEffect(() => {
+    const cleanMagnetic = applyMagneticEffect(ctaBtnRef.current, 0.3)
+    return () => cleanMagnetic()
+  }, [])
+
+  useGsapContext(({ gsap }) => {
+    // Banner Wrapper Entrance
+    gsap.from('.cta-banner-wrapper', {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      },
+      opacity: 0,
+      scale: 0.94,
+      y: 45,
+      duration: 1.1,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+
+    // Floating parallax on decorative geometry
+    gsap.to('.cta-decor-left', {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5
+      },
+      y: -25,
+      ease: 'none'
+    })
+
+    gsap.to('.cta-decor-right', {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5
+      },
+      y: 25,
+      ease: 'none'
+    })
+  }, [], sectionRef)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -17,9 +66,9 @@ export default function CtaBanner() {
   }
 
   return (
-    <section id="contact" className="cta-section">
+    <section id="contact" className="cta-section" ref={sectionRef}>
       <div className="container">
-        <div className="cta-banner-wrapper reveal-on-scroll">
+        <div className="cta-banner-wrapper">
           {/* Left Decorative 3D Glass Geometry */}
           <div className="cta-decor-left">
             <svg viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
@@ -88,6 +137,7 @@ export default function CtaBanner() {
             </p>
             
             <button 
+              ref={ctaBtnRef}
               onClick={() => setModalOpen(true)}
               className="btn-primary-orange"
               style={{ fontSize: '15px', padding: '10px 12px 10px 28px', cursor: 'pointer' }}

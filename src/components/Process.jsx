@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { ArrowRight, CheckCircle } from 'lucide-react'
+import { useGsapContext } from '../hooks/useGsap'
 
 const stepsData = [
   {
@@ -34,12 +35,46 @@ const stepsData = [
 
 export default function Process() {
   const [activeStep, setActiveStep] = useState(0)
+  const sectionRef = useRef(null)
+
+  useGsapContext(({ gsap }) => {
+    // Top Row entrance
+    gsap.from('.process-top-row', {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      },
+      opacity: 0,
+      y: 35,
+      duration: 1,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+
+    // Staggered Steps entrance
+    gsap.from('.process-step-item', {
+      scrollTrigger: {
+        trigger: '.process-steps-row',
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      },
+      opacity: 0,
+      y: 50,
+      stagger: 0.14,
+      duration: 0.9,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+  }, [], sectionRef)
 
   return (
-    <section id="process" className="process-section">
+    <section id="process" className="process-section" ref={sectionRef}>
       <div className="container">
         {/* Top Header Row */}
-        <div className="process-top-row reveal-on-scroll">
+        <div className="process-top-row">
           <h2 className="process-main-title">
             Design.<br />
             Develop.<br />
@@ -67,7 +102,7 @@ export default function Process() {
             return (
               <div 
                 key={step.num} 
-                className={`process-step-item reveal-on-scroll ${isSelected ? 'active-step' : ''}`}
+                className={`process-step-item ${isSelected ? 'active-step' : ''}`}
                 style={{ transitionDelay: `${index * 0.12}s`, cursor: 'pointer' }}
                 onClick={() => setActiveStep(index)}
               >

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, Quote, CheckCircle2, Star } from 'lucide-react'
+import { useGsapContext, gsap } from '../hooks/useGsap'
 
 const testimonialsList = [
   {
@@ -43,6 +44,7 @@ const testimonialsList = [
 export default function Testimonials() {
   const [startIndex, setStartIndex] = useState(0)
   const maxIndex = testimonialsList.length - 2
+  const sectionRef = useRef(null)
 
   const handlePrev = () => {
     setStartIndex((prev) => (prev === 0 ? maxIndex : prev - 1))
@@ -60,16 +62,58 @@ export default function Testimonials() {
     return () => clearInterval(timer)
   }, [maxIndex])
 
+  // GSAP ScrollTrigger Entrance
+  useGsapContext(({ gsap }) => {
+    gsap.from('.testimonials-left', {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      },
+      opacity: 0,
+      x: -40,
+      duration: 1,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+
+    gsap.from('.testimonials-cards-grid', {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      },
+      opacity: 0,
+      y: 45,
+      duration: 1,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+  }, [], sectionRef)
+
+  // Smooth slide transition when card changes
+  useEffect(() => {
+    if (sectionRef.current) {
+      gsap.fromTo(
+        '.testimonial-card',
+        { opacity: 0.3, y: 15 },
+        { opacity: 1, y: 0, duration: 0.45, stagger: 0.08, ease: 'power2.out' }
+      )
+    }
+  }, [startIndex])
+
   const visibleCards = [
     testimonialsList[startIndex % testimonialsList.length],
     testimonialsList[(startIndex + 1) % testimonialsList.length]
   ]
 
   return (
-    <section id="about" className="testimonials-section">
+    <section id="about" className="testimonials-section" ref={sectionRef}>
       <div className="container testimonials-layout">
         {/* Left Side */}
-        <div className="testimonials-left reveal-on-scroll">
+        <div className="testimonials-left">
           <span className="eyebrow-tag">CLIENTS LOVE US</span>
           <h2 className="section-title-light">What Our<br />Clients Say</h2>
           
@@ -113,7 +157,7 @@ export default function Testimonials() {
         {/* Right Cards */}
         <div className="testimonials-cards-grid">
           {visibleCards.map((item) => (
-            <div key={item.id} className="testimonial-card reveal-on-scroll">
+            <div key={item.id} className="testimonial-card">
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
                   <div className="quote-icon" style={{ margin: 0 }}>

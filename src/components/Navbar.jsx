@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { ArrowRight, Menu, X } from 'lucide-react'
+import { useGsapContext, applyMagneticEffect } from '../hooks/useGsap'
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -14,6 +15,22 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const navRef = useRef(null)
+  const talkBtnRef = useRef(null)
+
+  useEffect(() => {
+    const cleanMagnetic = applyMagneticEffect(talkBtnRef.current, 0.3)
+    return () => cleanMagnetic()
+  }, [])
+
+  useGsapContext(({ gsap }) => {
+    gsap.from(navRef.current, {
+      y: -30,
+      opacity: 0,
+      duration: 0.9,
+      ease: 'power3.out'
+    })
+  }, [], navRef)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,7 +54,7 @@ export default function Navbar() {
   }, [])
 
   return (
-    <header className={`navbar-header ${scrolled ? 'scrolled' : ''}`}>
+    <header ref={navRef} className={`navbar-header ${scrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-inner">
         {/* Brand Logo */}
         <a href="#home" className="brand-logo">
@@ -92,7 +109,7 @@ export default function Navbar() {
 
         {/* Right CTA */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <a href="#contact" className="nav-btn-talk">
+          <a ref={talkBtnRef} href="#contact" className="nav-btn-talk">
             <span>Let's Talk</span>
             <div className="talk-circle">
               <ArrowRight size={14} strokeWidth={2.5} />

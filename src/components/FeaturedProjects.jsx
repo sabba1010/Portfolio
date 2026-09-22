@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { ArrowRight, Sparkles, X, Eye } from 'lucide-react'
+import { useGsapContext } from '../hooks/useGsap'
 
 const projectsData = [
   {
@@ -52,7 +53,7 @@ function TiltProjectCard({ project, onSelect }) {
 
   return (
     <div 
-      className="project-card reveal-on-scroll"
+      className="project-card"
       style={tiltStyle}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -96,12 +97,64 @@ function TiltProjectCard({ project, onSelect }) {
 
 export default function FeaturedProjects() {
   const [selectedProject, setSelectedProject] = useState(null)
+  const sectionRef = useRef(null)
+
+  useGsapContext(({ gsap }) => {
+    // Sidebar Entrance
+    gsap.from('.projects-sidebar', {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      },
+      opacity: 0,
+      x: -45,
+      duration: 1,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+
+    // Staggered Cards Entrance
+    gsap.from('.project-card', {
+      scrollTrigger: {
+        trigger: '.projects-cards-row',
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        once: true
+      },
+      opacity: 0,
+      y: 60,
+      duration: 1.1,
+      stagger: 0.2,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+
+    // Parallax on each card's inner image
+    const cards = gsap.utils.toArray('.project-card')
+    cards.forEach((card) => {
+      const img = card.querySelector('.project-image')
+      if (img) {
+        gsap.to(img, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.2
+          },
+          yPercent: 10,
+          ease: 'none'
+        })
+      }
+    })
+  }, [], sectionRef)
 
   return (
-    <section id="work" className="projects-section">
+    <section id="work" className="projects-section" ref={sectionRef}>
       <div className="container projects-layout">
         {/* Left Sidebar */}
-        <div className="projects-sidebar reveal-on-scroll">
+        <div className="projects-sidebar">
           <span className="eyebrow-tag">OUR WORK</span>
           <h2 className="section-title-light">Featured<br />Projects</h2>
           <p className="projects-desc">

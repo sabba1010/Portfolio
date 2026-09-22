@@ -8,6 +8,7 @@ import Testimonials from './components/Testimonials'
 import CtaBanner from './components/CtaBanner'
 import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
+import CustomCursor from './components/CustomCursor'
 import { useScrollReveal } from './hooks/useScrollReveal'
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
 
   return (
     <div className="app-root">
+      <CustomCursor />
       <ScrollProgress />
       <Navbar />
       <main>

@@ -3,15 +3,15 @@ import { ArrowRight, Menu, X } from 'lucide-react'
 import { useGsapContext, applyMagneticEffect } from '../hooks/useGsap'
 
 const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#work' },
-  { label: 'Process', href: '#process' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', id: 'home', href: '#/' },
+  { label: 'About', id: 'about', href: '#/about' },
+  { label: 'Services', id: 'services', href: '#services' },
+  { label: 'Work', id: 'work', href: '#work' },
+  { label: 'Process', id: 'process', href: '#process' },
+  { label: 'Contact', id: 'contact', href: '#contact' },
 ]
 
-export default function Navbar() {
+export default function Navbar({ currentRoute = 'home', onNavigate }) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
@@ -33,11 +33,13 @@ export default function Navbar() {
   }, [], navRef)
 
   useEffect(() => {
+    if (currentRoute === 'about') return
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
 
       // Active section detection
-      const sections = ['home', 'services', 'work', 'process', 'about', 'contact']
+      const sections = ['home', 'services', 'work', 'process', 'contact']
       const scrollPos = window.scrollY + 200
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -51,13 +53,49 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [currentRoute])
+
+  const handleLinkClick = (e, link) => {
+    setMobileMenuOpen(false)
+
+    if (link.id === 'about') {
+      e.preventDefault()
+      if (onNavigate) {
+        onNavigate('about')
+      }
+    } else if (link.id === 'home') {
+      e.preventDefault()
+      if (onNavigate) {
+        onNavigate('home')
+      }
+    } else {
+      if (currentRoute === 'about') {
+        e.preventDefault()
+        if (onNavigate) {
+          onNavigate('home')
+        }
+        setTimeout(() => {
+          const el = document.getElementById(link.id)
+          if (el) el.scrollIntoView({ behavior: 'smooth' })
+        }, 100)
+      }
+    }
+  }
 
   return (
     <header ref={navRef} className={`navbar-header ${scrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-inner">
         {/* Brand Logo */}
-        <a href="#home" className="brand-logo">
+        <a 
+          href="#/" 
+          className="brand-logo"
+          onClick={(e) => {
+            e.preventDefault()
+            if (onNavigate) {
+              onNavigate('home')
+            }
+          }}
+        >
           <svg className="brand-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 9L19.5 25.5L25 18L13.5 9H7Z" fill="#FFFFFF" />
             <path d="M19.5 25.5L33 9H27.5L19.5 21L15.5 16L19.5 25.5Z" fill="#FF5500" />
@@ -73,12 +111,15 @@ export default function Navbar() {
         <nav>
           <ul className="nav-links-list">
             {navLinks.map((link) => {
-              const secId = link.href.replace('#', '')
-              const isActive = activeSection === secId
+              const isActive = currentRoute === 'about' 
+                ? link.id === 'about'
+                : (activeSection === link.id && link.id !== 'about')
+
               return (
                 <li key={link.label} className="nav-link-item">
                   <a 
                     href={link.href}
+                    onClick={(e) => handleLinkClick(e, link)}
                     style={{
                       color: isActive ? '#ffffff' : '#b0b6c4',
                       fontWeight: isActive ? 700 : 500,
@@ -109,7 +150,23 @@ export default function Navbar() {
 
         {/* Right CTA */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <a ref={talkBtnRef} href="#contact" className="nav-btn-talk">
+          <a 
+            ref={talkBtnRef} 
+            href="#contact" 
+            className="nav-btn-talk"
+            onClick={(e) => {
+              if (currentRoute === 'about') {
+                e.preventDefault()
+                if (onNavigate) {
+                  onNavigate('home')
+                }
+                setTimeout(() => {
+                  const el = document.getElementById('contact')
+                  if (el) el.scrollIntoView({ behavior: 'smooth' })
+                }, 100)
+              }
+            }}
+          >
             <span>Let's Talk</span>
             <div className="talk-circle">
               <ArrowRight size={14} strokeWidth={2.5} />
@@ -147,7 +204,7 @@ export default function Navbar() {
             <a 
               key={item.label} 
               href={item.href}
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleLinkClick(e, item)}
               style={{ fontSize: '18px', fontWeight: 600, color: '#fff' }}
             >
               {item.label}

@@ -35,12 +35,20 @@ function YoutubeIcon({ size = 16 }) {
   )
 }
 
-export default function Footer() {
+export default function Footer({ onNavigate }) {
   return (
     <footer className="footer-section">
       <div className="container footer-inner">
         {/* Left: Brand Logo */}
-        <div className="brand-logo" style={{ cursor: 'pointer' }}>
+        <div 
+          className="brand-logo" 
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            if (onNavigate) {
+              onNavigate('home')
+            }
+          }}
+        >
           <svg className="brand-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 9L19.5 25.5L25 18L13.5 9H7Z" fill="#111111" />
             <path d="M19.5 25.5L33 9H27.5L19.5 21L15.5 16L19.5 25.5Z" fill="#FF5500" />
@@ -54,11 +62,83 @@ export default function Footer() {
 
         {/* Center: Navigation */}
         <ul className="footer-nav-list">
-          <li className="footer-nav-item"><a href="#home">Home</a></li>
-          <li className="footer-nav-item"><a href="#about">About</a></li>
-          <li className="footer-nav-item"><a href="#services">Services</a></li>
-          <li className="footer-nav-item"><a href="#work">Work</a></li>
-          <li className="footer-nav-item"><a href="#contact">Contact</a></li>
+          <li className="footer-nav-item">
+            <a 
+              href="#/" 
+              onClick={(e) => {
+                e.preventDefault()
+                if (onNavigate) {
+                  onNavigate('home')
+                }
+              }}
+            >
+              Home
+            </a>
+          </li>
+          <li className="footer-nav-item">
+            <a 
+              href="#/about" 
+              onClick={(e) => {
+                e.preventDefault()
+                if (onNavigate) {
+                  onNavigate('about')
+                }
+              }}
+            >
+              About
+            </a>
+          </li>
+          <li className="footer-nav-item">
+            <a 
+              href="#services" 
+              onClick={(e) => {
+                e.preventDefault()
+                if (onNavigate) {
+                  onNavigate('home')
+                }
+                setTimeout(() => {
+                  const el = document.getElementById('services')
+                  if (el) el.scrollIntoView({ behavior: 'smooth' })
+                }, 80)
+              }}
+            >
+              Services
+            </a>
+          </li>
+          <li className="footer-nav-item">
+            <a 
+              href="#work" 
+              onClick={(e) => {
+                e.preventDefault()
+                if (onNavigate) {
+                  onNavigate('home')
+                }
+                setTimeout(() => {
+                  const el = document.getElementById('work')
+                  if (el) el.scrollIntoView({ behavior: 'smooth' })
+                }, 80)
+              }}
+            >
+              Work
+            </a>
+          </li>
+          <li className="footer-nav-item">
+            <a 
+              href="#contact" 
+              onClick={(e) => {
+                e.preventDefault()
+                if (onNavigate) {
+                  onNavigate('home')
+                }
+                setTimeout(() => {
+                  const el = document.getElementById('contact')
+                  if (el) el.scrollIntoView({ behavior: 'smooth' })
+                }, 80)
+              }}
+            >
+              Contact
+            </a>
+          </li>
         </ul>
 
         {/* Right: Social Icons */}

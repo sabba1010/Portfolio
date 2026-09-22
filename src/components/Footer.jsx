@@ -90,16 +90,12 @@ export default function Footer({ onNavigate }) {
           </li>
           <li className="footer-nav-item">
             <a 
-              href="#services" 
+              href="#/services" 
               onClick={(e) => {
                 e.preventDefault()
                 if (onNavigate) {
-                  onNavigate('home')
+                  onNavigate('services')
                 }
-                setTimeout(() => {
-                  const el = document.getElementById('services')
-                  if (el) el.scrollIntoView({ behavior: 'smooth' })
-                }, 80)
               }}
             >
               Services

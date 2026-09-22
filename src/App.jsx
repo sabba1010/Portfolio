@@ -10,12 +10,15 @@ import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
 import CustomCursor from './components/CustomCursor'
 import AboutPage from './components/AboutPage'
+import ServicesPage from './components/ServicesPage'
 
 export default function App() {
   const [route, setRoute] = useState(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash
-      return hash === '#/about' || hash === '#about' ? 'about' : 'home'
+      if (hash === '#/about' || hash === '#about') return 'about'
+      if (hash === '#/services' || hash === '#services') return 'services'
+      return 'home'
     }
     return 'home'
   })
@@ -25,6 +28,9 @@ export default function App() {
       const hash = window.location.hash
       if (hash === '#/about' || hash === '#about') {
         setRoute('about')
+        window.scrollTo(0, 0)
+      } else if (hash === '#/services' || hash === '#services') {
+        setRoute('services')
         window.scrollTo(0, 0)
       } else {
         setRoute('home')
@@ -40,6 +46,9 @@ export default function App() {
     if (newRoute === 'about') {
       window.history.pushState(null, '', '#/about')
       window.scrollTo(0, 0)
+    } else if (newRoute === 'services') {
+      window.history.pushState(null, '', '#/services')
+      window.scrollTo(0, 0)
     } else {
       window.history.pushState(null, '', '#/')
       window.scrollTo(0, 0)
@@ -54,6 +63,8 @@ export default function App() {
       <main>
         {route === 'about' ? (
           <AboutPage onNavigateHome={() => navigate('home')} />
+        ) : route === 'services' ? (
+          <ServicesPage onNavigateHome={() => navigate('home')} />
         ) : (
           <>
             <Hero />

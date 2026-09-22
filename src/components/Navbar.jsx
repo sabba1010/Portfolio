@@ -5,7 +5,7 @@ import { useGsapContext, applyMagneticEffect } from '../hooks/useGsap'
 const navLinks = [
   { label: 'Home', id: 'home', href: '#/' },
   { label: 'About', id: 'about', href: '#/about' },
-  { label: 'Services', id: 'services', href: '#services' },
+  { label: 'Services', id: 'services', href: '#/services' },
   { label: 'Work', id: 'work', href: '#work' },
   { label: 'Process', id: 'process', href: '#process' },
   { label: 'Contact', id: 'contact', href: '#contact' },
@@ -33,7 +33,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
   }, [], navRef)
 
   useEffect(() => {
-    if (currentRoute === 'about') return
+    if (currentRoute !== 'home') return
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
@@ -63,13 +63,18 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
       if (onNavigate) {
         onNavigate('about')
       }
+    } else if (link.id === 'services') {
+      e.preventDefault()
+      if (onNavigate) {
+        onNavigate('services')
+      }
     } else if (link.id === 'home') {
       e.preventDefault()
       if (onNavigate) {
         onNavigate('home')
       }
     } else {
-      if (currentRoute === 'about') {
+      if (currentRoute !== 'home') {
         e.preventDefault()
         if (onNavigate) {
           onNavigate('home')
@@ -113,7 +118,9 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
             {navLinks.map((link) => {
               const isActive = currentRoute === 'about' 
                 ? link.id === 'about'
-                : (activeSection === link.id && link.id !== 'about')
+                : currentRoute === 'services'
+                ? link.id === 'services'
+                : (activeSection === link.id && link.id !== 'about' && link.id !== 'services')
 
               return (
                 <li key={link.label} className="nav-link-item">
@@ -155,7 +162,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
             href="#contact" 
             className="nav-btn-talk"
             onClick={(e) => {
-              if (currentRoute === 'about') {
+              if (currentRoute !== 'home') {
                 e.preventDefault()
                 if (onNavigate) {
                   onNavigate('home')

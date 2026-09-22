@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { 
   Box, 
   Monitor, 
@@ -13,48 +13,124 @@ import {
 const servicesData = [
   {
     id: '3d-web',
+    num: '01',
     icon: Box,
     title: '3D & Interactive Web',
-    desc: 'Scroll animations, 3D scenes, WebGL, Three.js'
+    desc: 'Scroll animations, 3D scenes, WebGL, Three.js',
+    tags: ['Three.js', 'WebGL', 'Shaders']
   },
   {
     id: 'web-dev',
+    num: '02',
     icon: Monitor,
     title: 'Website Development',
-    desc: 'Modern, fast and scalable websites with React / Next.js'
+    desc: 'Modern, fast and scalable websites with React / Next.js',
+    tags: ['React 19', 'Vite', 'Next.js']
   },
   {
     id: 'branding',
+    num: '03',
     icon: PenTool,
     title: 'Brand & UI/UX Design',
-    desc: 'Clean, modern and conversion focused design'
+    desc: 'Clean, modern and conversion focused design',
+    tags: ['Figma', 'Design System', 'UI/UX']
   },
   {
     id: 'ecommerce',
+    num: '04',
     icon: ShoppingCart,
     title: 'E-commerce Solutions',
-    desc: 'Custom online stores that drive results'
+    desc: 'Custom online stores that drive results',
+    tags: ['Shopify', 'Stripe', 'Headless']
   },
   {
     id: 'web-apps',
+    num: '05',
     icon: BarChart3,
     title: 'Web Applications',
-    desc: 'Powerful web apps for modern businesses'
+    desc: 'Powerful web apps for modern businesses',
+    tags: ['Cloud', 'APIs', 'Real-time']
   },
   {
     id: 'support',
+    num: '06',
     icon: Layers,
     title: 'Ongoing Support',
-    desc: "We're with you even after launch"
+    desc: "We're with you even after launch",
+    tags: ['Maintenance', 'Speed', 'SEO']
   }
 ]
+
+// Service Card with 3D Perspective Tilt on Mouse Move
+function TiltServiceCard({ item, index }) {
+  const [tiltStyle, setTiltStyle] = useState({})
+  const IconComponent = item.icon
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotateX = ((y - centerY) / centerY) * -8
+    const rotateY = ((x - centerX) / centerX) * 8
+
+    setTiltStyle({
+      transform: `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`,
+      transition: 'transform 0.1s ease-out',
+    })
+  }
+
+  const handleMouseLeave = () => {
+    setTiltStyle({
+      transform: 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)',
+      transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+    })
+  }
+
+  return (
+    <div 
+      className="service-card reveal-on-scroll"
+      style={{
+        ...tiltStyle,
+        transitionDelay: `${index * 0.08}s`
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Background Watermark Number */}
+      <span className="service-watermark">{item.num}</span>
+
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 2 }}>
+        <div className="service-icon-wrap">
+          <IconComponent size={22} strokeWidth={2.2} />
+        </div>
+        <div className="service-arrow-wrap">
+          <ArrowUpRight size={17} />
+        </div>
+      </div>
+
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <h3 className="service-card-title">{item.title}</h3>
+        <p className="service-card-desc">{item.desc}</p>
+      </div>
+
+      {/* Tech Tags */}
+      <div className="service-tags-row">
+        {item.tags.map((tag) => (
+          <span key={tag} className="service-tag-chip">{tag}</span>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function Services() {
   return (
     <section id="services" className="services-section">
       <div className="container services-layout">
-        {/* Left Column info */}
-        <div className="services-info">
+        {/* Left Column */}
+        <div className="services-info reveal-on-scroll">
           <span className="eyebrow-tag">WHAT WE DO</span>
           <h2 className="section-title-dark">
             Digital<br />
@@ -74,23 +150,11 @@ export default function Services() {
           </a>
         </div>
 
-        {/* Right 6 Cards Grid */}
+        {/* Right 6 Cards Grid with 3D Tilt */}
         <div className="services-grid">
-          {servicesData.map((item) => {
-            const IconComponent = item.icon
-            return (
-              <div key={item.id} className="service-card">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <div className="service-icon-wrap">
-                    <IconComponent size={22} strokeWidth={2.2} />
-                  </div>
-                  <ArrowUpRight size={18} color="#94a3b8" style={{ transition: 'all 0.3s ease' }} />
-                </div>
-                <h3 className="service-card-title">{item.title}</h3>
-                <p className="service-card-desc">{item.desc}</p>
-              </div>
-            )
-          })}
+          {servicesData.map((item, index) => (
+            <TiltServiceCard key={item.id} item={item} index={index} />
+          ))}
         </div>
       </div>
     </section>

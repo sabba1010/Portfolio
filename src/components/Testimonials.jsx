@@ -1,43 +1,64 @@
-import React, { useState } from 'react'
-import { ChevronLeft, ChevronRight, Quote, CheckCircle2 } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { ChevronLeft, ChevronRight, Quote, CheckCircle2, Star } from 'lucide-react'
 
 const testimonialsList = [
   {
     id: 1,
     quote: '“Velotech Studio delivered an amazing website for our brand. The 3D experience blew our minds!”',
     name: 'Daniel Kim',
-    role: 'Founder, Elevate',
+    role: 'Founder',
     company: 'Elevate Labs',
-    avatar: '/avatar_daniel.jpg'
+    avatar: '/avatar_daniel.jpg',
+    rating: 5
   },
   {
     id: 2,
     quote: '“Professional, creative and technically outstanding. Highly recommended for any serious web venture!”',
     name: 'Sarah Lee',
-    role: 'CEO, NovaTech',
+    role: 'CEO',
     company: 'NovaTech AI',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80'
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    rating: 5
   },
   {
     id: 3,
     quote: '“The attention to detail and Three.js performance optimization exceeded our wildest expectations.”',
     name: 'Marcus Vance',
-    role: 'Product Lead, Apex Dynamics',
+    role: 'Product Lead',
     company: 'Apex Dynamics',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    rating: 5
+  },
+  {
+    id: 4,
+    quote: '“Our conversion rates surged by 120% after launching the new interactive 3D web application.”',
+    name: 'Elena Rostova',
+    role: 'CMO',
+    company: 'Veloce Mobility',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    rating: 5
   }
 ]
 
 export default function Testimonials() {
   const [startIndex, setStartIndex] = useState(0)
+  const maxIndex = testimonialsList.length - 2
 
   const handlePrev = () => {
-    setStartIndex((prev) => (prev === 0 ? testimonialsList.length - 2 : prev - 1))
+    setStartIndex((prev) => (prev === 0 ? maxIndex : prev - 1))
   }
 
   const handleNext = () => {
-    setStartIndex((prev) => (prev >= testimonialsList.length - 2 ? 0 : prev + 1))
+    setStartIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))
   }
+
+  // Auto advance every 7 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setStartIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))
+    }, 7000)
+    return () => clearInterval(timer)
+  }, [maxIndex])
 
   const visibleCards = [
     testimonialsList[startIndex % testimonialsList.length],
@@ -48,7 +69,7 @@ export default function Testimonials() {
     <section id="about" className="testimonials-section">
       <div className="container testimonials-layout">
         {/* Left Side */}
-        <div className="testimonials-left">
+        <div className="testimonials-left reveal-on-scroll">
           <span className="eyebrow-tag">CLIENTS LOVE US</span>
           <h2 className="section-title-light">What Our<br />Clients Say</h2>
           
@@ -68,48 +89,75 @@ export default function Testimonials() {
               <ChevronRight size={20} />
             </button>
           </div>
+
+          {/* Carousel Indicator Dots */}
+          <div style={{ display: 'flex', gap: '8px', marginTop: '24px' }}>
+            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setStartIndex(i)}
+                style={{
+                  width: startIndex === i ? '24px' : '8px',
+                  height: '8px',
+                  borderRadius: '4px',
+                  background: startIndex === i ? 'var(--color-orange)' : 'rgba(255, 255, 255, 0.2)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer'
+                }}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Right Cards */}
         <div className="testimonials-cards-grid">
           {visibleCards.map((item) => (
-            <div key={item.id} className="testimonial-card">
+            <div key={item.id} className="testimonial-card reveal-on-scroll">
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
                   <div className="quote-icon" style={{ margin: 0 }}>
                     <Quote size={28} fill="#ff5500" strokeWidth={0} />
                   </div>
-                  <span style={{ 
-                    display: 'inline-flex', 
-                    alignItems: 'center', 
-                    gap: '6px', 
-                    fontSize: '11px', 
-                    fontWeight: 700, 
-                    color: 'rgba(255, 255, 255, 0.45)', 
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    padding: '4px 10px',
-                    borderRadius: '999px'
-                  }}>
-                    <CheckCircle2 size={12} color="#ff5500" />
-                    Verified Client
-                  </span>
+                  
+                  {/* 5 Star Rating */}
+                  <div style={{ display: 'flex', gap: '3px' }}>
+                    {Array.from({ length: item.rating }).map((_, idx) => (
+                      <Star key={idx} size={14} fill="#ffaa00" color="#ffaa00" />
+                    ))}
+                  </div>
                 </div>
+
                 <p className="testimonial-quote">{item.quote}</p>
               </div>
 
-              <div className="testimonial-author">
-                <img 
-                  src={item.avatar} 
-                  alt={item.name} 
-                  className="author-avatar"
-                  onError={(e) => {
-                    e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=ff5500&color=fff`
-                  }}
-                />
-                <div className="author-info">
-                  <span className="author-name">{item.name}</span>
-                  <span className="author-role">{item.role} • {item.company}</span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '20px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                <div className="testimonial-author">
+                  <img 
+                    src={item.avatar} 
+                    alt={item.name} 
+                    className="author-avatar"
+                    onError={(e) => {
+                      e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=ff5500&color=fff`
+                    }}
+                  />
+                  <div className="author-info">
+                    <span className="author-name">{item.name}</span>
+                    <span className="author-role">{item.role} • {item.company}</span>
+                  </div>
                 </div>
+
+                <span style={{ 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: '5px', 
+                  fontSize: '11px', 
+                  fontWeight: 700, 
+                  color: 'rgba(255, 255, 255, 0.5)'
+                }}>
+                  <CheckCircle2 size={12} color="var(--color-orange)" />
+                  Verified
+                </span>
               </div>
             </div>
           ))}

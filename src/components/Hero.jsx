@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ArrowRight, Play, X, ChevronDown, ChevronUp } from 'lucide-react'
+import { ArrowRight, Play, X, ChevronDown, ChevronUp, Sparkles } from 'lucide-react'
 import HeroCanvas from './HeroCanvas'
 
 export default function Hero() {
@@ -7,13 +7,13 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero-section">
-      {/* 3D WebGL Canvas */}
+      {/* Three.js 3D Background Magma Embers & Particles */}
       <HeroCanvas />
 
-      {/* Hero Content Overlay */}
-      <div className="container hero-content">
+      {/* Hero Content Grid */}
+      <div className="container hero-content-grid">
+        {/* Left Column: Copy, CTA, Stats */}
         <div className="hero-left-col">
-          {/* Two-tone Eyebrow Tag */}
           <div className="hero-eyebrow-wrap">
             <span className="eyebrow-accent">IDEAS INTO IMMERSIVE</span>
             <span className="eyebrow-normal">EXPERIENCES</span>
@@ -26,8 +26,8 @@ export default function Hero() {
 
           <p className="hero-description">
             Velotech Studio is a creative technology agency crafting high-end,
-            interactive, and memorable digital experiences with Three.js, React
-            and modern web technologies.
+            interactive, and memorable digital experiences with Three.js, Spline,
+            React and modern web technologies.
           </p>
 
           <div className="hero-cta-group">
@@ -68,15 +68,45 @@ export default function Hero() {
             </div>
           </div>
         </div>
+
+        {/* Right Column: Spline 3D Greeting Robot */}
+        <div className="hero-right-visual-wrap">
+          <div className="hero-robot-container">
+            {/* Ambient Magma Glow */}
+            <div className="hero-magma-glow-orb" />
+
+            {/* Live Interactive Chip */}
+            <div className="robot-interactive-badge">
+              <span className="live-dot" />
+              <span>INTERACTIVE 3D • MOVE CURSOR</span>
+              <Sparkles size={13} color="var(--color-orange)" />
+            </div>
+
+            {/* Spline 3D Robot Frame */}
+            <div className="robot-iframe-wrap">
+              <iframe 
+                src="https://my.spline.design/genkubgreetingrobot-v9MGHrlLZGL0LqmKZ6hrd62k/" 
+                frameBorder="0" 
+                width="100%" 
+                height="100%"
+                title="GENKUB Greeting Robot"
+                className="spline-robot-iframe"
+                loading="eager"
+              />
+              {/* Bottom gradient fade */}
+              <div className="robot-bottom-fade" />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Right Edge Vertical Scroll Indicator */}
       <div className="hero-scroll-indicator">
         <span className="scroll-text">SCROLL</span>
         <div className="scroll-pill-wrap">
-          <ChevronUp size={11} strokeWidth={2.5} color="rgba(255,255,255,0.4)" />
+          <ChevronUp size={11} strokeWidth={2.5} color="rgba(255,255,255,0.45)" />
           <div className="scroll-pill-dot" />
-          <ChevronDown size={11} strokeWidth={2.5} color="rgba(255,255,255,0.4)" />
+          <ChevronDown size={11} strokeWidth={2.5} color="rgba(255,255,255,0.45)" />
         </div>
       </div>
 
@@ -86,7 +116,7 @@ export default function Hero() {
           style={{
             position: 'fixed',
             inset: 0,
-            zIndex: 999,
+            zIndex: 9999,
             backgroundColor: 'rgba(0, 0, 0, 0.88)',
             backdropFilter: 'blur(24px)',
             display: 'flex',
@@ -129,7 +159,7 @@ export default function Hero() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 zIndex: 10,
-                transition: 'all 0.2s ease'
+                cursor: 'pointer'
               }}
               aria-label="Close modal"
             >

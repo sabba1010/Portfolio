@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ArrowRight, Play, X, ChevronDown, ChevronUp, Sparkles } from 'lucide-react'
+import { ArrowRight, Play, X, ChevronDown, ChevronUp } from 'lucide-react'
 import HeroCanvas from './HeroCanvas'
 
 export default function Hero() {
@@ -69,20 +69,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column: Spline 3D Greeting Robot */}
+        {/* Right Column: Spline 3D Greeting Robot (Borderless & Box-Free) */}
         <div className="hero-right-visual-wrap">
           <div className="hero-robot-container">
-            {/* Ambient Magma Glow */}
-            <div className="hero-magma-glow-orb" />
-
-            {/* Live Interactive Chip */}
-            <div className="robot-interactive-badge">
-              <span className="live-dot" />
-              <span>INTERACTIVE 3D • MOVE CURSOR</span>
-              <Sparkles size={13} color="var(--color-orange)" />
-            </div>
-
-            {/* Spline 3D Robot Frame */}
             <div className="robot-iframe-wrap">
               <iframe 
                 src="https://my.spline.design/genkubgreetingrobot-v9MGHrlLZGL0LqmKZ6hrd62k/" 
@@ -93,8 +82,6 @@ export default function Hero() {
                 className="spline-robot-iframe"
                 loading="eager"
               />
-              {/* Bottom gradient fade */}
-              <div className="robot-bottom-fade" />
             </div>
           </div>
         </div>

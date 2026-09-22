@@ -1708,6 +1708,7 @@ img {
    PREMIUM AESTHETIC MOUSE CURSOR & EMBER TRAIL
    ========================================================================== */
 @media (hover: hover) and (pointer: fine) {
+
   html.custom-cursor-enabled,
   html.custom-cursor-enabled body,
   html.custom-cursor-enabled a,
@@ -1785,7 +1786,7 @@ img {
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
   box-shadow: 0 0 16px rgba(255, 85, 0, 0.15), inset 0 0 10px rgba(255, 85, 0, 0.05);
-  transition: 
+  transition:
     width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     margin 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1843,6 +1844,7 @@ img {
     opacity: 0;
     transform: scale(0.7);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -1855,6 +1857,7 @@ img {
 }
 
 @media (hover: none) and (pointer: coarse) {
+
   .cursor-core-dot,
   .cursor-trailing-ring,
   .cursor-trail-canvas {
@@ -2484,6 +2487,7 @@ img {
 
 /* Responsive Rules for About Page */
 @media (max-width: 1024px) {
+
   .about-values-grid,
   .about-tech-grid,
   .about-team-grid {
@@ -3061,8 +3065,13 @@ img {
 }
 
 @keyframes modalFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .service-modal-box {
@@ -3078,8 +3087,15 @@ img {
 }
 
 @keyframes modalSlideUp {
-  from { transform: translateY(20px) scale(0.96); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
+  from {
+    transform: translateY(20px) scale(0.96);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
 
 .modal-close-btn {
@@ -3223,11 +3239,11 @@ img {
   overflow: hidden;
 }
 
-.projects-section > .container,
-.testimonials-section > .container,
-.about-values-section > .container,
-.about-team-section > .container,
-.services-methodology-section > .container {
+.projects-section>.container,
+.testimonials-section>.container,
+.about-values-section>.container,
+.about-team-section>.container,
+.services-methodology-section>.container {
   position: relative;
   z-index: 2;
 }

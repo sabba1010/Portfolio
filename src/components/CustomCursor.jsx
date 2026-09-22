@@ -197,18 +197,16 @@ export default function CustomCursor() {
       {/* Razor-sharp Core Dot with GSAP quickTo */}
       <div
         ref={dotRef}
-        className={`cursor-core-dot ${!cursorVisible ? 'cursor-hidden' : ''} ${
-          isHovered ? 'dot-hover' : ''
-        }`}
+        className={`cursor-core-dot ${!cursorVisible ? 'cursor-hidden' : ''} ${isHovered ? 'dot-hover' : ''
+          }`}
         aria-hidden="true"
       />
 
       {/* Smooth Trailing Liquid Halo Ring with GSAP quickTo */}
       <div
         ref={ringRef}
-        className={`cursor-trailing-ring ${!cursorVisible ? 'cursor-hidden' : ''} ${
-          isHovered ? `ring-hover ring-${hoverType}` : ''
-        }`}
+        className={`cursor-trailing-ring ${!cursorVisible ? 'cursor-hidden' : ''} ${isHovered ? `ring-hover ring-${hoverType}` : ''
+          }`}
         aria-hidden="true"
       >
         {isHovered && hoverType === 'card' && (

@@ -1,25 +1,26 @@
 import React from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import InteractiveDemo from './components/InteractiveDemo'
-import FeatureGrid from './components/FeatureGrid'
-import QuickStartGuide from './components/QuickStartGuide'
+import Services from './components/Services'
+import FeaturedProjects from './components/FeaturedProjects'
+import Process from './components/Process'
+import Testimonials from './components/Testimonials'
+import CtaBanner from './components/CtaBanner'
 import Footer from './components/Footer'
 
-function App() {
+export default function App() {
   return (
-    <>
-      <div className="bg-grid" />
+    <div className="app-root">
       <Navbar />
-      <main style={{ flex: 1 }}>
+      <main>
         <Hero />
-        <InteractiveDemo />
-        <FeatureGrid />
-        <QuickStartGuide />
+        <Services />
+        <FeaturedProjects />
+        <Process />
+        <Testimonials />
+        <CtaBanner />
       </main>
       <Footer />
-    </>
+    </div>
   )
 }
-
-export default App

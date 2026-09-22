@@ -101,8 +101,8 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
     <header ref={navRef} className={`navbar-header ${scrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-inner">
         {/* Brand Logo */}
-        <a 
-          href="#/" 
+        <a
+          href="#/"
           className="brand-logo"
           onClick={(e) => {
             e.preventDefault()
@@ -126,15 +126,15 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
         <nav>
           <ul className="nav-links-list">
             {navLinks.map((link) => {
-              const isActive = currentRoute === 'about' 
+              const isActive = currentRoute === 'about'
                 ? link.id === 'about'
                 : currentRoute === 'services'
-                ? link.id === 'services'
-                : (activeSection === link.id && link.id !== 'about' && link.id !== 'services')
+                  ? link.id === 'services'
+                  : (activeSection === link.id && link.id !== 'about' && link.id !== 'services')
 
               return (
                 <li key={link.label} className="nav-link-item">
-                  <a 
+                  <a
                     href={link.href}
                     onClick={(e) => handleLinkClick(e, link)}
                     style={{
@@ -144,7 +144,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
                   >
                     {link.label}
                     {isActive && (
-                      <span 
+                      <span
                         style={{
                           position: 'absolute',
                           bottom: -2,
@@ -155,7 +155,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
                           background: 'var(--color-orange)',
                           borderRadius: '2px',
                           boxShadow: '0 0 8px var(--color-orange)'
-                        }} 
+                        }}
                       />
                     )}
                   </a>
@@ -167,9 +167,9 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
 
         {/* Right CTA */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <a 
-            ref={talkBtnRef} 
-            href="#contact" 
+          <a
+            ref={talkBtnRef}
+            href="#contact"
             className="nav-btn-talk"
             onClick={(e) => {
               e.preventDefault()
@@ -201,7 +201,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
           </a>
 
           {/* Mobile hamburger */}
-          <button 
+          <button
             className="mobile-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
@@ -228,8 +228,8 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
           zIndex: 99
         }}>
           {navLinks.map((item) => (
-            <a 
-              key={item.label} 
+            <a
+              key={item.label}
               href={item.href}
               onClick={(e) => handleLinkClick(e, item)}
               style={{ fontSize: '18px', fontWeight: 600, color: '#fff' }}

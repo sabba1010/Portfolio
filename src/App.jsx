@@ -11,6 +11,7 @@ import ScrollProgress from './components/ScrollProgress'
 import CustomCursor from './components/CustomCursor'
 import AboutPage from './components/AboutPage'
 import ServicesPage from './components/ServicesPage'
+import SmoothScroll from './components/SmoothScroll'
 
 export default function App() {
   const [route, setRoute] = useState(() => {
@@ -23,15 +24,25 @@ export default function App() {
     return 'home'
   })
 
+  const scrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(0, { immediate: true })
+      } else {
+        window.scrollTo(0, 0)
+      }
+    }
+  }
+
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash
       if (hash === '#/about' || hash === '#about') {
         setRoute('about')
-        window.scrollTo(0, 0)
+        scrollToTop()
       } else if (hash === '#/services' || hash === '#services') {
         setRoute('services')
-        window.scrollTo(0, 0)
+        scrollToTop()
       } else {
         setRoute('home')
       }
@@ -45,18 +56,19 @@ export default function App() {
     setRoute(newRoute)
     if (newRoute === 'about') {
       window.history.pushState(null, '', '#/about')
-      window.scrollTo(0, 0)
+      scrollToTop()
     } else if (newRoute === 'services') {
       window.history.pushState(null, '', '#/services')
-      window.scrollTo(0, 0)
+      scrollToTop()
     } else {
       window.history.pushState(null, '', '#/')
-      window.scrollTo(0, 0)
+      scrollToTop()
     }
   }
 
   return (
-    <div className="app-root">
+    <SmoothScroll>
+      <div className="app-root">
       <CustomCursor />
       <ScrollProgress />
       <Navbar currentRoute={route} onNavigate={navigate} />
@@ -77,6 +89,7 @@ export default function App() {
         )}
       </main>
       <Footer onNavigate={navigate} />
-    </div>
+      </div>
+    </SmoothScroll>
   )
 }

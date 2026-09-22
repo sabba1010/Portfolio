@@ -74,15 +74,25 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
         onNavigate('home')
       }
     } else {
+      e.preventDefault()
+      const scrollToSection = () => {
+        const el = document.getElementById(link.id)
+        if (el) {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(el, { offset: -70, duration: 1.25 })
+          } else {
+            el.scrollIntoView({ behavior: 'smooth' })
+          }
+        }
+      }
+
       if (currentRoute !== 'home') {
-        e.preventDefault()
         if (onNavigate) {
           onNavigate('home')
         }
-        setTimeout(() => {
-          const el = document.getElementById(link.id)
-          if (el) el.scrollIntoView({ behavior: 'smooth' })
-        }, 100)
+        setTimeout(scrollToSection, 120)
+      } else {
+        scrollToSection()
       }
     }
   }
@@ -162,15 +172,25 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
             href="#contact" 
             className="nav-btn-talk"
             onClick={(e) => {
+              e.preventDefault()
+              const scrollToContact = () => {
+                const el = document.getElementById('contact')
+                if (el) {
+                  if (window.__lenis) {
+                    window.__lenis.scrollTo(el, { offset: -70, duration: 1.25 })
+                  } else {
+                    el.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }
+              }
+
               if (currentRoute !== 'home') {
-                e.preventDefault()
                 if (onNavigate) {
                   onNavigate('home')
                 }
-                setTimeout(() => {
-                  const el = document.getElementById('contact')
-                  if (el) el.scrollIntoView({ behavior: 'smooth' })
-                }, 100)
+                setTimeout(scrollToContact, 120)
+              } else {
+                scrollToContact()
               }
             }}
           >

@@ -106,13 +106,21 @@ export default function Footer({ onNavigate }) {
               href="#work" 
               onClick={(e) => {
                 e.preventDefault()
+                const scrollToWork = () => {
+                  const el = document.getElementById('work')
+                  if (el) {
+                    if (window.__lenis) {
+                      window.__lenis.scrollTo(el, { offset: -70, duration: 1.25 })
+                    } else {
+                      el.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }
+                }
+
                 if (onNavigate) {
                   onNavigate('home')
                 }
-                setTimeout(() => {
-                  const el = document.getElementById('work')
-                  if (el) el.scrollIntoView({ behavior: 'smooth' })
-                }, 80)
+                setTimeout(scrollToWork, 120)
               }}
             >
               Work
@@ -123,13 +131,21 @@ export default function Footer({ onNavigate }) {
               href="#contact" 
               onClick={(e) => {
                 e.preventDefault()
+                const scrollToContact = () => {
+                  const el = document.getElementById('contact')
+                  if (el) {
+                    if (window.__lenis) {
+                      window.__lenis.scrollTo(el, { offset: -70, duration: 1.25 })
+                    } else {
+                      el.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }
+                }
+
                 if (onNavigate) {
                   onNavigate('home')
                 }
-                setTimeout(() => {
-                  const el = document.getElementById('contact')
-                  if (el) el.scrollIntoView({ behavior: 'smooth' })
-                }, 80)
+                setTimeout(scrollToContact, 120)
               }}
             >
               Contact

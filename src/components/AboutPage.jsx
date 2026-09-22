@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import HeroCanvas from './HeroCanvas'
 import CtaBanner from './CtaBanner'
+import SectionCanvas from './SectionCanvas'
 import { useGsapContext } from '../hooks/useGsap'
 
 function TwitterIcon({ size = 13 }) {
@@ -395,6 +396,7 @@ export default function AboutPage({ onNavigateHome }) {
           3. OUR CORE PILLARS (VALUES)
           ================================================================= */}
       <section className="about-values-section">
+        <SectionCanvas variant="constellation" />
         <div className="container">
           <div className="about-section-header">
             <span className="eyebrow-tag">OUR CORE PRINCIPLES</span>
@@ -460,6 +462,7 @@ export default function AboutPage({ onNavigateHome }) {
           5. LEADERSHIP & TEAM
           ================================================================= */}
       <section className="about-team-section">
+        <SectionCanvas variant="wave" />
         <div className="container">
           <div className="about-section-header">
             <span className="eyebrow-tag">THE CRAFTSMEN</span>

@@ -3198,3 +3198,36 @@ img {
     padding: 32px 24px;
   }
 }
+
+/* ==========================================================================
+   AMBIENT THREE.JS SECTION CANVAS STYLING
+   ========================================================================== */
+.section-canvas-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0.88;
+}
+
+.projects-section,
+.testimonials-section,
+.about-values-section,
+.about-team-section,
+.services-methodology-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.projects-section > .container,
+.testimonials-section > .container,
+.about-values-section > .container,
+.about-team-section > .container,
+.services-methodology-section > .container {
+  position: relative;
+  z-index: 2;
+}

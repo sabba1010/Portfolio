@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import HeroCanvas from './HeroCanvas'
 import CtaBanner from './CtaBanner'
+import SectionCanvas from './SectionCanvas'
 import { useGsapContext } from '../hooks/useGsap'
 
 const serviceCategories = [
@@ -381,6 +382,7 @@ export default function ServicesPage({ onNavigateHome }) {
           3. WORKING METHODOLOGY
           ================================================================= */}
       <section className="services-methodology-section">
+        <SectionCanvas variant="flow" />
         <div className="container">
           <div className="about-section-header">
             <span className="eyebrow-tag">EXECUTION PLAYBOOK</span>

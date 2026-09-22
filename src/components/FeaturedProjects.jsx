@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { ArrowRight, Sparkles, X, Eye } from 'lucide-react'
 import { useGsapContext } from '../hooks/useGsap'
+import SectionCanvas from './SectionCanvas'
 
 const projectsData = [
   {
@@ -152,6 +153,7 @@ export default function FeaturedProjects() {
 
   return (
     <section id="work" className="projects-section" ref={sectionRef}>
+      <SectionCanvas variant="constellation" />
       <div className="container projects-layout">
         {/* Left Sidebar */}
         <div className="projects-sidebar">

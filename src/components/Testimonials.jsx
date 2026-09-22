@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, Quote, CheckCircle2, Star } from 'lucide-react'
 import { useGsapContext, gsap } from '../hooks/useGsap'
+import SectionCanvas from './SectionCanvas'
 
 const testimonialsList = [
   {
@@ -110,7 +111,8 @@ export default function Testimonials() {
   ]
 
   return (
-    <section id="about" className="testimonials-section" ref={sectionRef}>
+    <section id="testimonials" className="testimonials-section" ref={sectionRef}>
+      <SectionCanvas variant="wave" />
       <div className="container testimonials-layout">
         {/* Left Side */}
         <div className="testimonials-left">

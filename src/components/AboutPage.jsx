@@ -342,7 +342,7 @@ export default function AboutPage({ onNavigateHome }) {
         <div className="container about-story-grid">
           <div className="about-story-col">
             <span className="eyebrow-tag">THE GENESIS</span>
-            <h2 className="section-title-light">
+            <h2 className="section-title-dark">
               We Built Velotech to Break the Monotony of Flat Web
             </h2>
             <p className="about-text-p">
@@ -433,10 +433,10 @@ export default function AboutPage({ onNavigateHome }) {
         <div className="container">
           <div className="about-section-header">
             <span className="eyebrow-tag">CREATIVE WEAPONRY</span>
-            <h2 className="section-title-light">
+            <h2 className="section-title-dark">
               Our 3D & Engineering Arsenal
             </h2>
-            <p className="section-header-desc">
+            <p className="section-header-desc" style={{ color: 'var(--light-text-muted)' }}>
               We leverage an elite toolchain designed to deliver museum-grade 3D graphics on any device.
             </p>
           </div>
@@ -508,10 +508,10 @@ export default function AboutPage({ onNavigateHome }) {
         <div className="container">
           <div className="about-section-header">
             <span className="eyebrow-tag">OUR JOURNEY</span>
-            <h2 className="section-title-light">
+            <h2 className="section-title-dark">
               Studio Milestones
             </h2>
-            <p className="section-header-desc">
+            <p className="section-header-desc" style={{ color: 'var(--light-text-muted)' }}>
               Key turning points in our mission to reshape the modern web.
             </p>
           </div>

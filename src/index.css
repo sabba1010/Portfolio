@@ -1981,11 +1981,12 @@ img {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* 2. Story Section */
+/* 2. Story Section (Light Section) */
 .about-story-section {
   padding: 130px 0;
-  background: #090a0d;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  border-top: 1px solid var(--light-border);
 }
 
 .about-story-grid {
@@ -1998,7 +1999,7 @@ img {
 .about-text-p {
   font-size: 16px;
   line-height: 1.78;
-  color: #9aa2b4;
+  color: var(--light-text-muted);
   margin-bottom: 22px;
 }
 
@@ -2012,8 +2013,9 @@ img {
 .story-metric-box {
   padding: 24px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid var(--light-border);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
 }
 
 .metric-box-num {
@@ -2029,7 +2031,7 @@ img {
 .metric-box-sub {
   font-size: 12px;
   font-weight: 700;
-  color: #828a9b;
+  color: #6a7283;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -2038,9 +2040,9 @@ img {
 .story-quote-card {
   padding: 42px;
   border-radius: 26px;
-  background: linear-gradient(145deg, rgba(255, 85, 0, 0.07) 0%, rgba(14, 15, 20, 0.96) 100%);
-  border: 1px solid rgba(255, 85, 0, 0.22);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 85, 0, 0.08);
+  background: #ffffff;
+  border: 1.5px solid var(--light-border);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.06);
 }
 
 .quote-badge-pill {
@@ -2051,7 +2053,8 @@ img {
   font-weight: 800;
   letter-spacing: 0.16em;
   color: var(--color-orange);
-  background: rgba(255, 85, 0, 0.12);
+  background: rgba(255, 85, 0, 0.08);
+  border: 1px solid rgba(255, 85, 0, 0.2);
   padding: 6px 14px;
   border-radius: 999px;
   margin-bottom: 24px;
@@ -2060,7 +2063,7 @@ img {
 .founder-quote {
   font-size: 19px;
   line-height: 1.68;
-  color: #ffffff;
+  color: #12151e;
   font-weight: 500;
   font-style: italic;
   margin-bottom: 32px;
@@ -2071,7 +2074,7 @@ img {
   align-items: center;
   gap: 16px;
   padding-top: 22px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid #edf0f6;
 }
 
 .founder-avatar-wrap {
@@ -2092,7 +2095,7 @@ img {
 .founder-name {
   font-size: 16px;
   font-weight: 800;
-  color: #ffffff;
+  color: #0e1118;
 }
 
 .founder-title {
@@ -2178,10 +2181,12 @@ img {
   color: #8a91a2;
 }
 
-/* 4. Tech Section */
+/* 4. Tech Section (Light Section) */
 .about-tech-section {
   padding: 130px 0;
-  background: #090a0d;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  border-top: 1px solid var(--light-border);
 }
 
 .about-tech-grid {
@@ -2193,15 +2198,17 @@ img {
 .about-tech-card {
   padding: 24px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #ffffff;
+  border: 1px solid var(--light-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
   transition: all 0.3s ease;
 }
 
 .about-tech-card:hover {
-  border-color: rgba(255, 85, 0, 0.38);
+  border-color: rgba(255, 85, 0, 0.45);
   transform: translateY(-4px);
-  background: rgba(255, 85, 0, 0.035);
+  background: #ffffff;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08), 0 0 20px rgba(255, 85, 0, 0.06);
 }
 
 .tech-card-header {
@@ -2222,8 +2229,9 @@ img {
 .tech-level-pill {
   font-size: 11px;
   font-weight: 600;
-  color: #7e8799;
-  background: rgba(255, 255, 255, 0.05);
+  color: #555d70;
+  background: #f0f2f7;
+  border: 1px solid #e1e4ed;
   padding: 3px 9px;
   border-radius: 999px;
 }
@@ -2231,13 +2239,13 @@ img {
 .tech-name {
   font-size: 17px;
   font-weight: 800;
-  color: #ffffff;
+  color: #0e1118;
   margin-bottom: 4px;
 }
 
 .tech-role {
   font-size: 13px;
-  color: #8b92a3;
+  color: #636b7e;
 }
 
 /* 5. Team Section */
@@ -2351,10 +2359,12 @@ img {
   transform: translateY(-2px);
 }
 
-/* 6. Timeline Section */
+/* 6. Timeline Section (Light Section) */
 .about-timeline-section {
   padding: 130px 0;
-  background: #090a0d;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  border-top: 1px solid var(--light-border);
 }
 
 .about-timeline-wrap {
@@ -2370,7 +2380,7 @@ img {
   bottom: 0;
   left: 50%;
   width: 2px;
-  background: linear-gradient(180deg, var(--color-orange), rgba(255, 85, 0, 0.15));
+  background: linear-gradient(180deg, var(--color-orange), rgba(255, 85, 0, 0.2));
   transform: translateX(-50%);
 }
 
@@ -2402,13 +2412,13 @@ img {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--dark-bg);
-  border: 2px solid var(--color-orange);
+  background: #ffffff;
+  border: 2.5px solid var(--color-orange);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 5;
-  box-shadow: 0 0 14px rgba(255, 85, 0, 0.65);
+  box-shadow: 0 0 14px rgba(255, 85, 0, 0.5);
 }
 
 .timeline-left .timeline-dot {
@@ -2423,23 +2433,22 @@ img {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #ffffff;
+  background: var(--color-orange);
 }
 
 .timeline-content-card {
   padding: 26px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: #ffffff;
+  border: 1px solid var(--light-border);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
   width: 100%;
   transition: all 0.3s ease;
 }
 
 .timeline-content-card:hover {
-  border-color: rgba(255, 85, 0, 0.38);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 85, 0, 0.45);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
 }
 
 .timeline-year-tag {
@@ -2455,14 +2464,14 @@ img {
 .timeline-title {
   font-size: 19px;
   font-weight: 800;
-  color: #ffffff;
+  color: #0e1118;
   margin-bottom: 8px;
 }
 
 .timeline-desc {
   font-size: 14px;
   line-height: 1.68;
-  color: #8e96a8;
+  color: #555d70;
 }
 
 /* Responsive Rules for About Page */
@@ -2632,10 +2641,12 @@ img {
   transform: translateY(-2px);
 }
 
-/* 2. Services Deep-Dive Stack */
+/* 2. Services Deep-Dive Stack (Light Section) */
 .services-showcase-section {
-  padding: 60px 0 120px;
-  background: #070709;
+  padding: 100px 0 120px;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  border-top: 1px solid var(--light-border);
 }
 
 .services-cards-stack {
@@ -2648,14 +2659,14 @@ img {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 48px;
-  background: linear-gradient(145deg, #111319 0%, #0c0d12 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid var(--light-border);
   border-radius: 28px;
   padding: 50px 48px;
   position: relative;
   overflow: hidden;
   transition: all 0.35s var(--ease-spring);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.05), 0 2px 8px -1px rgba(0, 0, 0, 0.02);
 }
 
 .service-deep-card::before {
@@ -2665,15 +2676,15 @@ img {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 85, 0, 0.5), transparent);
-  opacity: 0.6;
+  background: linear-gradient(90deg, transparent, rgba(255, 85, 0, 0.55), transparent);
+  opacity: 0.7;
   transition: opacity 0.3s ease;
 }
 
 .service-deep-card:hover {
-  border-color: rgba(255, 85, 0, 0.4);
+  border-color: rgba(255, 85, 0, 0.45);
   transform: translateY(-5px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 85, 0, 0.12);
+  box-shadow: 0 24px 50px -8px rgba(0, 0, 0, 0.1), 0 0 28px rgba(255, 85, 0, 0.08);
 }
 
 .service-deep-card:hover::before {
@@ -2695,7 +2706,7 @@ img {
 .service-deep-num {
   font-size: 32px;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.22);
+  color: rgba(14, 17, 24, 0.14);
   font-family: var(--font-display);
   line-height: 1;
 }
@@ -2704,8 +2715,8 @@ img {
   width: 52px;
   height: 52px;
   border-radius: 14px;
-  background: rgba(255, 85, 0, 0.12);
-  border: 1px solid rgba(255, 85, 0, 0.25);
+  background: rgba(255, 85, 0, 0.08);
+  border: 1px solid rgba(255, 85, 0, 0.22);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2714,7 +2725,7 @@ img {
 .service-deep-title {
   font-size: 32px;
   font-weight: 900;
-  color: #ffffff;
+  color: #0e1118;
   letter-spacing: -0.025em;
   line-height: 1.18;
   margin-bottom: 10px;
@@ -2732,7 +2743,7 @@ img {
 .service-deep-overview {
   font-size: 15px;
   line-height: 1.68;
-  color: #a4abbd;
+  color: #505869;
   margin-bottom: 24px;
 }
 
@@ -2747,16 +2758,20 @@ img {
   align-items: flex-start;
   gap: 12px;
   font-size: 14px;
-  color: #d6dae4;
   line-height: 1.5;
+}
+
+.service-highlight-item span {
+  color: #222735;
+  font-weight: 600;
 }
 
 .service-card-right {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #f7f8fc;
+  border: 1px solid #e3e6f0;
   border-radius: 22px;
   padding: 34px 28px;
   justify-content: center;
@@ -2767,8 +2782,8 @@ img {
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
-  background: rgba(255, 85, 0, 0.12);
-  border: 1px solid rgba(255, 85, 0, 0.3);
+  background: rgba(255, 85, 0, 0.08);
+  border: 1px solid rgba(255, 85, 0, 0.25);
   border-radius: 999px;
   width: fit-content;
 }
@@ -2792,7 +2807,7 @@ img {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: #8e96a8;
+  color: #636a7c;
 }
 
 .meta-chips-wrap {
@@ -2804,11 +2819,12 @@ img {
 .deliverable-chip {
   font-size: 12.5px;
   font-weight: 600;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #1e2433;
+  background: #ffffff;
+  border: 1px solid #dfe3ee;
   padding: 6px 13px;
   border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
   transition: border-color 0.2s ease;
 }
 
@@ -2819,9 +2835,9 @@ img {
 .tech-tool-chip {
   font-size: 12px;
   font-weight: 700;
-  color: #ff8533;
+  color: #d64700;
   background: rgba(255, 85, 0, 0.08);
-  border: 1px solid rgba(255, 85, 0, 0.2);
+  border: 1px solid rgba(255, 85, 0, 0.22);
   padding: 5px 11px;
   border-radius: 6px;
 }
@@ -2881,10 +2897,12 @@ img {
   color: #8e96a8;
 }
 
-/* 4. Engagement Tiers */
+/* 4. Engagement Tiers (Light Section) */
 .services-tiers-section {
   padding: 120px 0;
-  background: #070709;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  border-top: 1px solid var(--light-border);
 }
 
 .engagement-tiers-grid {
@@ -2895,20 +2913,31 @@ img {
 }
 
 .engagement-tier-card {
-  background: linear-gradient(150deg, #12141c 0%, #0c0d12 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid var(--light-border);
   border-radius: 26px;
   padding: 42px 34px;
   display: flex;
   flex-direction: column;
   position: relative;
   transition: all 0.35s ease;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+}
+
+.engagement-tier-card:hover {
+  border-color: rgba(255, 85, 0, 0.45);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.08);
 }
 
 .engagement-tier-card.popular-tier {
-  border-color: var(--color-orange);
-  background: linear-gradient(150deg, #171924 0%, #0e1017 100%);
-  box-shadow: 0 0 40px rgba(255, 85, 0, 0.18);
+  border: 2px solid var(--color-orange);
+  background: #ffffff;
+  box-shadow: 0 16px 45px -8px rgba(255, 85, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+.engagement-tier-card.popular-tier:hover {
+  box-shadow: 0 22px 55px -8px rgba(255, 85, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .popular-badge {
@@ -2940,14 +2969,14 @@ img {
 .tier-title {
   font-size: 24px;
   font-weight: 900;
-  color: #ffffff;
+  color: #0e1118;
   margin-bottom: 12px;
 }
 
 .tier-desc {
   font-size: 14px;
   line-height: 1.62;
-  color: #949cb0;
+  color: #586072;
   margin-bottom: 28px;
   min-height: 68px;
 }
@@ -2965,8 +2994,12 @@ img {
   align-items: flex-start;
   gap: 10px;
   font-size: 13.5px;
-  color: #cdd3e2;
   line-height: 1.5;
+}
+
+.tier-feat-row span {
+  color: #232835;
+  font-weight: 600;
 }
 
 .tier-cta-btn {
@@ -2979,9 +3012,9 @@ img {
   border-radius: 999px;
   font-size: 13.5px;
   font-weight: 800;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.04);
-  color: #ffffff;
+  border: 1px solid #dcdfe8;
+  background: #f0f2f7;
+  color: #11141c;
   cursor: pointer;
   transition: all 0.25s var(--ease-spring);
 }
@@ -2989,19 +3022,20 @@ img {
 .tier-cta-btn:hover {
   background: var(--color-orange);
   border-color: var(--color-orange);
-  box-shadow: 0 0 20px rgba(255, 85, 0, 0.5);
+  box-shadow: 0 4px 18px rgba(255, 85, 0, 0.35);
   color: #ffffff;
 }
 
 .popular-tier .tier-cta-btn {
   background: var(--color-orange);
   border-color: var(--color-orange);
-  box-shadow: 0 0 22px rgba(255, 85, 0, 0.4);
+  color: #ffffff;
+  box-shadow: 0 6px 22px rgba(255, 85, 0, 0.4);
 }
 
 .popular-tier .tier-cta-btn:hover {
   background: #ff6a1a;
-  box-shadow: 0 0 30px rgba(255, 85, 0, 0.7);
+  box-shadow: 0 8px 30px rgba(255, 85, 0, 0.6);
 }
 
 /* 5. Service Quote Modal */

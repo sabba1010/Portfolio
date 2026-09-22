@@ -291,7 +291,18 @@ export default function ServicesPage({ onNavigateHome }) {
           2. DETAILED SERVICE DEEP-DIVES
           ================================================================= */}
       <section className="services-showcase-section">
-        <div className="container services-cards-stack">
+        <div className="container">
+          <div className="about-section-header" style={{ marginBottom: '56px' }}>
+            <span className="eyebrow-tag">SPECIALIZED DISCIPLINES</span>
+            <h2 className="section-title-dark">
+              High-Impact Creative Solutions
+            </h2>
+            <p className="section-header-desc" style={{ color: 'var(--light-text-muted)' }}>
+              Bespoke execution tailored to elevate visionary brands and drive measurable business growth.
+            </p>
+          </div>
+
+          <div className="services-cards-stack">
           {filteredServices.map((service) => {
             const Icon = service.icon
             return (
@@ -362,6 +373,7 @@ export default function ServicesPage({ onNavigateHome }) {
               </div>
             )
           })}
+          </div>
         </div>
       </section>
 
@@ -415,10 +427,10 @@ export default function ServicesPage({ onNavigateHome }) {
         <div className="container">
           <div className="about-section-header">
             <span className="eyebrow-tag">COLLABORATION MODELS</span>
-            <h2 className="section-title-light">
+            <h2 className="section-title-dark">
               Engagement Models Built for Scale
             </h2>
-            <p className="section-header-desc">
+            <p className="section-header-desc" style={{ color: 'var(--light-text-muted)' }}>
               Choose the flexible partnership structure that aligns with your timeline and roadmap.
             </p>
           </div>

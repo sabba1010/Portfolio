@@ -1,64 +1,76 @@
 import React from 'react'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Sparkles } from 'lucide-react'
 
 export default function CtaBanner() {
   return (
     <section id="contact" className="cta-section">
       <div className="container">
         <div className="cta-banner-wrapper">
-          {/* Left Decorative 3D Shapes */}
+          {/* Left Decorative 3D Glass Geometry */}
           <div className="cta-decor-left">
-            <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+            <svg viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
               <defs>
-                <linearGradient id="ctaDarkGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#1e2029" />
-                  <stop offset="100%" stopColor="#0a0a0d" />
+                <linearGradient id="slateGradLeft" x1="20%" y1="10%" x2="90%" y2="90%">
+                  <stop offset="0%" stopColor="#2a2d39" />
+                  <stop offset="45%" stopColor="#14151b" />
+                  <stop offset="100%" stopColor="#07080a" />
                 </linearGradient>
-                <linearGradient id="ctaOrangeGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#ff7733" />
-                  <stop offset="100%" stopColor="#ff4500" />
+                <linearGradient id="orangePrismGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#ff8a3d" />
+                  <stop offset="50%" stopColor="#ff5500" />
+                  <stop offset="100%" stopColor="#d93d00" />
                 </linearGradient>
-                <filter id="orangeGlowLeft" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="10" result="blur" />
+                <filter id="prismGlowLeft" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="14" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
               </defs>
 
-              {/* Glowing orange triangle wedge */}
-              <polygon points="-20,60 80,120 10,210" fill="url(#ctaOrangeGradLeft)" opacity="0.95" filter="url(#orangeGlowLeft)" />
+              {/* Glowing orange triangular glass wedge */}
+              <polygon points="-10,50 95,115 15,220" fill="url(#orangePrismGradLeft)" opacity="0.95" filter="url(#prismGlowLeft)" />
+              
               {/* Floating dark slate/phone */}
-              <rect x="-80" y="80" width="130" height="200" rx="20" transform="rotate(-18 -80 80)" fill="url(#ctaDarkGradLeft)" stroke="#3a3d4a" strokeWidth="1.5" />
+              <rect x="-90" y="70" width="145" height="220" rx="22" transform="rotate(-19 -90 70)" fill="url(#slateGradLeft)" stroke="#3e4354" strokeWidth="1.5" />
+              <rect x="-85" y="75" width="135" height="210" rx="18" transform="rotate(-19 -85 75)" fill="#090a0d" opacity="0.8" />
             </svg>
           </div>
 
-          {/* Right Decorative 3D Shapes */}
+          {/* Right Decorative 3D Glass Geometry */}
           <div className="cta-decor-right">
-            <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+            <svg viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
               <defs>
-                <linearGradient id="ctaDarkGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#252834" />
-                  <stop offset="100%" stopColor="#0d0e14" />
+                <linearGradient id="slateGradRight" x1="10%" y1="10%" x2="80%" y2="90%">
+                  <stop offset="0%" stopColor="#2c303f" />
+                  <stop offset="50%" stopColor="#13151c" />
+                  <stop offset="100%" stopColor="#08080c" />
                 </linearGradient>
-                <linearGradient id="ctaOrangeGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#ff8833" />
-                  <stop offset="100%" stopColor="#ff4400" />
+                <linearGradient id="orangePrismGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#ff944d" />
+                  <stop offset="50%" stopColor="#ff5500" />
+                  <stop offset="100%" stopColor="#cc3700" />
                 </linearGradient>
-                <filter id="orangeGlowRight" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="12" result="blur" />
+                <filter id="prismGlowRight" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="16" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
               </defs>
 
-              {/* Glowing orange triangle prism */}
-              <polygon points="120,110 220,140 160,260" fill="url(#ctaOrangeGradRight)" opacity="0.95" filter="url(#orangeGlowRight)" />
-              {/* Floating dark slab */}
-              <rect x="110" y="100" width="130" height="200" rx="20" transform="rotate(22 110 100)" fill="url(#ctaDarkGradRight)" stroke="#3f4352" strokeWidth="1.5" />
+              {/* Glowing orange triangular glass shard */}
+              <polygon points="135,95 245,130 180,270" fill="url(#orangePrismGradRight)" opacity="0.95" filter="url(#prismGlowRight)" />
+              
+              {/* Floating dark tablet slate */}
+              <rect x="120" y="85" width="145" height="220" rx="22" transform="rotate(22 120 85)" fill="url(#slateGradRight)" stroke="#44495c" strokeWidth="1.5" />
+              <rect x="125" y="90" width="135" height="210" rx="18" transform="rotate(22 125 90)" fill="#090a0d" opacity="0.8" />
             </svg>
           </div>
 
           {/* Center Content */}
           <div className="cta-content-inner">
-            <span className="cta-tagline">READY TO BUILD SOMETHING AMAZING?</span>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+              <Sparkles size={14} color="var(--color-orange)" />
+              <span className="cta-tagline" style={{ margin: 0 }}>READY TO BUILD SOMETHING AMAZING?</span>
+            </div>
+            
             <h2 className="cta-heading">
               Let's Create the <span className="highlight">Next Big Thing</span>
             </h2>

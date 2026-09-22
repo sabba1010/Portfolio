@@ -6,7 +6,8 @@ import {
   ShoppingCart, 
   BarChart3, 
   Layers, 
-  ArrowRight 
+  ArrowRight,
+  ArrowUpRight
 } from 'lucide-react'
 
 const servicesData = [
@@ -79,8 +80,11 @@ export default function Services() {
             const IconComponent = item.icon
             return (
               <div key={item.id} className="service-card">
-                <div className="service-icon-wrap">
-                  <IconComponent size={22} strokeWidth={2} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div className="service-icon-wrap">
+                    <IconComponent size={22} strokeWidth={2.2} />
+                  </div>
+                  <ArrowUpRight size={18} color="#94a3b8" style={{ transition: 'all 0.3s ease' }} />
                 </div>
                 <h3 className="service-card-title">{item.title}</h3>
                 <p className="service-card-desc">{item.desc}</p>

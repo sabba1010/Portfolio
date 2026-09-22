@@ -6,6 +6,7 @@ const projectsData = [
     id: 'next-gen-headphones',
     badge: '3D Website',
     title: 'Next Gen Product Experience',
+    year: '2026',
     image: '/headphones_project.jpg',
     link: '#contact'
   },
@@ -13,6 +14,7 @@ const projectsData = [
     id: 'modern-brand',
     badge: 'Branding',
     title: 'Modern Brand Identity',
+    year: '2026',
     image: '/brand_project.jpg',
     link: '#contact'
   }
@@ -25,7 +27,7 @@ export default function FeaturedProjects() {
         {/* Left Sidebar */}
         <div className="projects-sidebar">
           <span className="eyebrow-tag">OUR WORK</span>
-          <h2 className="section-title-light">Featured Projects</h2>
+          <h2 className="section-title-light">Featured<br />Projects</h2>
           <p className="projects-desc">
             A selection of our recent work where creativity meets technology.
           </p>
@@ -51,6 +53,14 @@ export default function FeaturedProjects() {
                 />
               </div>
               <div className="project-card-content">
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--color-orange)', letterSpacing: '0.1em' }}>
+                    CASE STUDY
+                  </span>
+                  <span style={{ fontSize: '12px', color: '#6e7587', fontWeight: 600 }}>
+                    {project.year}
+                  </span>
+                </div>
                 <h3 className="project-card-title">{project.title}</h3>
                 <a href={project.link} className="project-link">
                   <span>View Project</span>

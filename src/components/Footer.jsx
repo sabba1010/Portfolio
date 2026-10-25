@@ -106,6 +106,12 @@ export default function Footer({ onNavigate }) {
       <div className="footer-glow-aura" />
       <div className="footer-top-accent-line" />
 
+      {/* Giant Aesthetic Watermark Text positioned BEHIND all content */}
+      <div className="footer-giant-watermark" aria-hidden="true">
+        <span className="watermark-line">VELOTECH</span>
+        <span className="watermark-line">STUDIO</span>
+      </div>
+
       <div className="container footer-container-premium">
         
         {/* =================================================================
@@ -356,14 +362,7 @@ export default function Footer({ onNavigate }) {
         </div>
 
         {/* =================================================================
-            2. GIANT AESTHETIC WATERMARK TEXT
-            ================================================================= */}
-        <div className="footer-giant-watermark" aria-hidden="true">
-          <span>VELOTECH STUDIO</span>
-        </div>
-
-        {/* =================================================================
-            3. PRECISION BOTTOM BAR
+            2. PRECISION BOTTOM BAR
             ================================================================= */}
         <div className="footer-bottom-bar-premium">
           <div className="footer-copyright-text">

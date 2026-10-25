@@ -167,14 +167,55 @@ function TiltCard({ children, className = '' }) {
 }
 
 export default function ServicesPage({ onNavigateHome }) {
-  const [activeCategory, setActiveCategory] = useState('all')
+  const getInitialCategory = () => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash
+      const qIdx = hash.indexOf('?')
+      if (qIdx !== -1) {
+        const params = new URLSearchParams(hash.substring(qIdx))
+        const cat = params.get('category')
+        if (cat && ['design', 'packaging', 'development', 'cms'].includes(cat)) {
+          return cat
+        }
+      }
+    }
+    return 'all'
+  }
+
+  const [activeCategory, setActiveCategory] = useState(getInitialCategory)
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedService, setSelectedService] = useState('')
   const [formSubmitted, setFormSubmitted] = useState(false)
   const pageRef = useRef(null)
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    const handleCategoryCheck = () => {
+      const cat = getInitialCategory()
+      setActiveCategory(cat)
+      if (cat !== 'all') {
+        setTimeout(() => {
+          const showcase = document.querySelector('.services-showcase-section')
+          if (showcase) {
+            showcase.scrollIntoView({ behavior: 'smooth' })
+          }
+        }, 250)
+      }
+    }
+
+    const initialCat = getInitialCategory()
+    if (initialCat !== 'all') {
+      setTimeout(() => {
+        const showcase = document.querySelector('.services-showcase-section')
+        if (showcase) {
+          showcase.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 250)
+    } else {
+      window.scrollTo(0, 0)
+    }
+
+    window.addEventListener('hashchange', handleCategoryCheck)
+    return () => window.removeEventListener('hashchange', handleCategoryCheck)
   }, [])
 
   const filteredServices = activeCategory === 'all' 
@@ -187,9 +228,21 @@ export default function ServicesPage({ onNavigateHome }) {
     tl.from('.services-hero-breadcrumb', { opacity: 0, y: 15, duration: 0.6 })
       .from('.services-hero-title', { opacity: 0, y: 35, duration: 0.9 }, '-=0.35')
       .from('.services-hero-sub', { opacity: 0, y: 20, duration: 0.75 }, '-=0.5')
-      .from('.services-category-tabs', { opacity: 0, y: 20, duration: 0.7 }, '-=0.5')
 
-    // Staggered service deep-dive cards
+    // Staggered service deep-dive cards & filter tabs
+    gsap.from('.services-category-tabs', {
+      scrollTrigger: {
+        trigger: '.services-showcase-section',
+        start: 'top 85%',
+        once: true
+      },
+      opacity: 0,
+      y: 25,
+      duration: 0.7,
+      ease: 'power3.out',
+      clearProps: 'all'
+    })
+
     gsap.from('.service-deep-card', {
       scrollTrigger: {
         trigger: '.services-cards-stack',
@@ -272,19 +325,6 @@ export default function ServicesPage({ onNavigateHome }) {
             From high-converting brand identities and luxury 3D packaging to custom WebGL web apps 
             and scalable CMS platforms—we build digital assets that captivate audiences.
           </p>
-
-          {/* Interactive Category Filter Tabs */}
-          <div className="services-category-tabs">
-            {serviceCategories.map((cat) => (
-              <button
-                key={cat.id}
-                className={`service-tab-btn ${activeCategory === cat.id ? 'active-tab' : ''}`}
-                onClick={() => setActiveCategory(cat.id)}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -293,7 +333,7 @@ export default function ServicesPage({ onNavigateHome }) {
           ================================================================= */}
       <section className="services-showcase-section">
         <div className="container">
-          <div className="about-section-header" style={{ marginBottom: '56px' }}>
+          <div className="about-section-header" style={{ marginBottom: '52px' }}>
             <span className="eyebrow-tag">SPECIALIZED DISCIPLINES</span>
             <h2 className="section-title-dark">
               High-Impact Creative Solutions
@@ -301,6 +341,19 @@ export default function ServicesPage({ onNavigateHome }) {
             <p className="section-header-desc" style={{ color: 'var(--light-text-muted)' }}>
               Bespoke execution tailored to elevate visionary brands and drive measurable business growth.
             </p>
+
+            {/* Interactive Category Filter Tabs */}
+            <div className="services-category-tabs">
+              {serviceCategories.map((cat) => (
+                <button
+                  key={cat.id}
+                  className={`service-tab-btn ${activeCategory === cat.id ? 'active-tab' : ''}`}
+                  onClick={() => setActiveCategory(cat.id)}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="services-cards-stack">

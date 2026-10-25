@@ -33,7 +33,7 @@ const stepsData = [
   }
 ]
 
-export default function Process() {
+export default function Process({ onNavigate }) {
   const [activeStep, setActiveStep] = useState(0)
   const sectionRef = useRef(null)
 
@@ -73,20 +73,31 @@ export default function Process() {
   return (
     <section id="process" className="process-section" ref={sectionRef}>
       <div className="container">
-        {/* Top Header Row */}
+        {/* Top Header Row - 4 Column Matching Grid */}
         <div className="process-top-row">
-          <h2 className="process-main-title">
-            Design.<br />
-            Develop.<br />
-            <span className="animate-highlight">Animate.</span>
-          </h2>
+          <div className="process-top-left">
+            <span className="eyebrow-tag">OUR METHODOLOGY</span>
+            <h2 className="process-main-title">
+              Design.<br />
+              Develop.<br />
+              <span className="animate-highlight">Animate.</span>
+            </h2>
+          </div>
 
           <div className="process-top-right">
             <p className="process-top-desc">
-              We follow a simple and proven process to turn your ideas into
-              stunning digital experiences.
+              We follow a disciplined, battle-tested 4-stage engineering workflow to transform 
+              complex creative ideas into high-converting, immersive digital products.
             </p>
-            <a href="#contact" className="btn-outline-dark">
+            <a 
+              href="#/contact" 
+              className="btn-outline-dark"
+              onClick={(e) => {
+                e.preventDefault()
+                if (onNavigate) onNavigate('contact')
+                else window.location.hash = '#/contact'
+              }}
+            >
               <span>Our Process</span>
               <div className="circle-icon">
                 <ArrowRight size={15} strokeWidth={2.5} />
@@ -95,7 +106,7 @@ export default function Process() {
           </div>
         </div>
 
-        {/* 4 Steps Sequence */}
+        {/* 4 Steps Sequence - Perfectly Aligned */}
         <div className="process-steps-row">
           {stepsData.map((step, index) => {
             const isSelected = activeStep === index
@@ -103,22 +114,26 @@ export default function Process() {
               <div 
                 key={step.num} 
                 className={`process-step-item ${isSelected ? 'active-step' : ''}`}
-                style={{ transitionDelay: `${index * 0.12}s`, cursor: 'pointer' }}
+                style={{ transitionDelay: `${index * 0.08}s`, cursor: 'pointer' }}
                 onClick={() => setActiveStep(index)}
+                role="button"
+                tabIndex={0}
               >
-                <div className="process-step-header">
-                  <span className={step.numClass}>{step.num}</span>
-                  {index < stepsData.length - 1 && <div className="step-divider-line" />}
+                <div>
+                  <div className="process-step-header">
+                    <span className={step.numClass}>{step.num}</span>
+                    <div className="step-divider-line" />
+                  </div>
+
+                  <h3 className="step-title">{step.title}</h3>
+                  <p className="step-desc">{step.desc}</p>
                 </div>
 
-                <h3 className="step-title">{step.title}</h3>
-                <p className="step-desc">{step.desc}</p>
-
-                {/* Deliverables tags */}
-                <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {/* Deliverables checklist pinned to bottom */}
+                <div className="process-step-deliverables">
                   {step.deliverables.map((item) => (
-                    <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11.5px', color: '#667085', fontWeight: 600 }}>
-                      <CheckCircle size={12} color="var(--color-orange)" />
+                    <div key={item} className="process-deliverable-item">
+                      <CheckCircle size={13} color="var(--color-orange)" />
                       <span>{item}</span>
                     </div>
                   ))}

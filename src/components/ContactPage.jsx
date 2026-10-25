@@ -229,7 +229,7 @@ export default function ContactPage({ onNavigateHome, onNavigate }) {
     )
   }
 
-  const handleCopyEmail = (email = 'hello@velotech.studio') => {
+  const handleCopyEmail = (email = 'velotecltd@gmail.com') => {
     navigator.clipboard?.writeText(email)
     setCopiedEmail(true)
     setTimeout(() => setCopiedEmail(false), 2200)
@@ -331,11 +331,11 @@ export default function ContactPage({ onNavigateHome, onNavigate }) {
             <button
               type="button"
               className="quick-pill-btn"
-              onClick={() => handleCopyEmail('hello@velotech.studio')}
+              onClick={() => handleCopyEmail('velotecltd@gmail.com')}
               title="Click to copy email"
             >
               <Mail size={15} color="var(--color-orange)" />
-              <span>hello@velotech.studio</span>
+              <span>velotecltd@gmail.com</span>
               {copiedEmail ? (
                 <span className="pill-feedback-badge">
                   <Check size={12} /> Copied!
@@ -728,14 +728,14 @@ export default function ContactPage({ onNavigateHome, onNavigate }) {
                     </div>
                     <div className="channel-info">
                       <span className="channel-label">General & Inquiries</span>
-                      <a href="mailto:hello@velotech.studio" className="channel-val">
-                        hello@velotech.studio
+                      <a href="mailto:velotecltd@gmail.com" className="channel-val">
+                        velotecltd@gmail.com
                       </a>
                     </div>
                     <button
                       type="button"
                       className="channel-copy-btn"
-                      onClick={() => handleCopyEmail('hello@velotech.studio')}
+                      onClick={() => handleCopyEmail('velotecltd@gmail.com')}
                       title="Copy email"
                     >
                       <Copy size={13} />
@@ -748,14 +748,14 @@ export default function ContactPage({ onNavigateHome, onNavigate }) {
                     </div>
                     <div className="channel-info">
                       <span className="channel-label">Enterprise & Partnerships</span>
-                      <a href="mailto:partnerships@velotech.studio" className="channel-val">
-                        partnerships@velotech.studio
+                      <a href="mailto:velotecltd@gmail.com" className="channel-val">
+                        velotecltd@gmail.com
                       </a>
                     </div>
                     <button
                       type="button"
                       className="channel-copy-btn"
-                      onClick={() => handleCopyEmail('partnerships@velotech.studio')}
+                      onClick={() => handleCopyEmail('velotecltd@gmail.com')}
                       title="Copy email"
                     >
                       <Copy size={13} />

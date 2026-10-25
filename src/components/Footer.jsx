@@ -35,6 +35,15 @@ function YoutubeIcon({ size = 16 }) {
   )
 }
 
+function MailIcon({ size = 15 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
+  )
+}
+
 export default function Footer({ onNavigate }) {
   return (
     <footer className="footer-section">
@@ -141,8 +150,11 @@ export default function Footer({ onNavigate }) {
           </li>
         </ul>
 
-        {/* Right: Social Icons */}
+        {/* Right: Contact & Social Icons */}
         <div className="footer-social-group">
+          <a href="mailto:velotecltd@gmail.com" className="social-circle-link" aria-label="Email: velotecltd@gmail.com" title="velotecltd@gmail.com">
+            <MailIcon size={15} />
+          </a>
           <a href="https://x.com" target="_blank" rel="noreferrer" className="social-circle-link" aria-label="X (Twitter)">
             <XTwitterIcon size={14} />
           </a>

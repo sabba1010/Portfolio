@@ -18,9 +18,9 @@ export default function App() {
   const [route, setRoute] = useState(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash
-      if (hash === '#/about' || hash === '#about') return 'about'
-      if (hash === '#/services' || hash === '#services') return 'services'
-      if (hash === '#/contact' || hash === '#contact') return 'contact'
+      if (hash.startsWith('#/about') || hash === '#about') return 'about'
+      if (hash.startsWith('#/services') || hash === '#services') return 'services'
+      if (hash.startsWith('#/contact') || hash === '#contact') return 'contact'
       return 'home'
     }
     return 'home'
@@ -39,13 +39,13 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash
-      if (hash === '#/about' || hash === '#about') {
+      if (hash.startsWith('#/about') || hash === '#about') {
         setRoute('about')
         scrollToTop()
-      } else if (hash === '#/services' || hash === '#services') {
+      } else if (hash.startsWith('#/services') || hash === '#services') {
         setRoute('services')
         scrollToTop()
-      } else if (hash === '#/contact' || hash === '#contact') {
+      } else if (hash.startsWith('#/contact') || hash === '#contact') {
         setRoute('contact')
         scrollToTop()
       } else {
@@ -57,13 +57,14 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
 
-  const navigate = (newRoute) => {
+  const navigate = (newRoute, param) => {
     setRoute(newRoute)
     if (newRoute === 'about') {
       window.history.pushState(null, '', '#/about')
       scrollToTop()
     } else if (newRoute === 'services') {
-      window.history.pushState(null, '', '#/services')
+      const targetHash = param ? `#/services?category=${param}` : '#/services'
+      window.history.pushState(null, '', targetHash)
       scrollToTop()
     } else if (newRoute === 'contact') {
       window.history.pushState(null, '', '#/contact')
@@ -90,9 +91,9 @@ export default function App() {
         ) : (
           <>
             <Hero />
-            <Services />
+            <Services onNavigate={navigate} />
             <FeaturedProjects />
-            <Process />
+            <Process onNavigate={navigate} />
             <Testimonials />
             <CtaBanner onNavigate={navigate} />
           </>

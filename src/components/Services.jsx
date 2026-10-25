@@ -18,7 +18,8 @@ const servicesData = [
     icon: Box,
     title: '3D & Interactive Web',
     desc: 'Scroll animations, 3D scenes, WebGL, Three.js',
-    tags: ['Three.js', 'WebGL', 'Shaders']
+    tags: ['Three.js', 'WebGL', 'Shaders'],
+    category: 'development'
   },
   {
     id: 'web-dev',
@@ -26,7 +27,8 @@ const servicesData = [
     icon: Monitor,
     title: 'Website Development',
     desc: 'Modern, fast and scalable websites with React / Next.js',
-    tags: ['React 19', 'Vite', 'Next.js']
+    tags: ['React 19', 'Vite', 'Next.js'],
+    category: 'development'
   },
   {
     id: 'branding',
@@ -34,7 +36,8 @@ const servicesData = [
     icon: PenTool,
     title: 'Brand & UI/UX Design',
     desc: 'Clean, modern and conversion focused design',
-    tags: ['Figma', 'Design System', 'UI/UX']
+    tags: ['Figma', 'Design System', 'UI/UX'],
+    category: 'design'
   },
   {
     id: 'ecommerce',
@@ -42,7 +45,8 @@ const servicesData = [
     icon: ShoppingCart,
     title: 'E-commerce Solutions',
     desc: 'Custom online stores that drive results',
-    tags: ['Shopify', 'Stripe', 'Headless']
+    tags: ['Shopify', 'Stripe', 'Headless'],
+    category: 'cms'
   },
   {
     id: 'web-apps',
@@ -50,7 +54,8 @@ const servicesData = [
     icon: BarChart3,
     title: 'Web Applications',
     desc: 'Powerful web apps for modern businesses',
-    tags: ['Cloud', 'APIs', 'Real-time']
+    tags: ['Cloud', 'APIs', 'Real-time'],
+    category: 'development'
   },
   {
     id: 'support',
@@ -58,12 +63,13 @@ const servicesData = [
     icon: Layers,
     title: 'Ongoing Support',
     desc: "We're with you even after launch",
-    tags: ['Maintenance', 'Speed', 'SEO']
+    tags: ['Maintenance', 'Speed', 'SEO'],
+    category: 'cms'
   }
 ]
 
 // Service Card with 3D Perspective Tilt on Mouse Move
-function TiltServiceCard({ item, index }) {
+function TiltServiceCard({ item, index, onNavigate }) {
   const [tiltStyle, setTiltStyle] = useState({})
   const IconComponent = item.icon
 
@@ -89,15 +95,29 @@ function TiltServiceCard({ item, index }) {
     })
   }
 
+  const handleCardClick = (e) => {
+    e.preventDefault()
+    if (onNavigate) {
+      onNavigate('services', item.category)
+    } else {
+      window.location.hash = `#/services?category=${item.category}`
+    }
+  }
+
   return (
     <div 
       className="service-card"
       style={{
         ...tiltStyle,
-        transitionDelay: `${index * 0.08}s`
+        transitionDelay: `${index * 0.08}s`,
+        cursor: 'pointer'
       }}
+      onClick={handleCardClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${item.title}`}
     >
       {/* Background Watermark Number */}
       <span className="service-watermark">{item.num}</span>
@@ -126,7 +146,7 @@ function TiltServiceCard({ item, index }) {
   )
 }
 
-export default function Services() {
+export default function Services({ onNavigate }) {
   const sectionRef = useRef(null)
 
   useGsapContext(({ gsap }) => {
@@ -179,7 +199,18 @@ export default function Services() {
             digital products that help brands stand out.
           </p>
 
-          <a href="#work" className="btn-outline-dark">
+          <a 
+            href="#/services" 
+            className="btn-outline-dark"
+            onClick={(e) => {
+              e.preventDefault()
+              if (onNavigate) {
+                onNavigate('services')
+              } else {
+                window.location.hash = '#/services'
+              }
+            }}
+          >
             <span>Explore Services</span>
             <div className="circle-icon">
               <ArrowRight size={15} strokeWidth={2.5} />
@@ -190,7 +221,7 @@ export default function Services() {
         {/* Right 6 Cards Grid with 3D Tilt */}
         <div className="services-grid">
           {servicesData.map((item, index) => (
-            <TiltServiceCard key={item.id} item={item} index={index} />
+            <TiltServiceCard key={item.id} item={item} index={index} onNavigate={onNavigate} />
           ))}
         </div>
       </div>

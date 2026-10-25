@@ -135,13 +135,9 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
                 ? link.id === 'about'
                 : currentRoute === 'services'
                   ? link.id === 'services'
-<<<<<<< HEAD
                   : currentRoute === 'contact'
                     ? link.id === 'contact'
                     : (activeSection === link.id && link.id !== 'about' && link.id !== 'services' && link.id !== 'contact')
-=======
-                  : (activeSection === link.id && link.id !== 'about' && link.id !== 'services')
->>>>>>> 8064bd47d11cfaf68675ef31444ed4cfd66cf2c0
 
               return (
                 <li key={link.label} className="nav-link-item">
@@ -180,11 +176,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <a
             ref={talkBtnRef}
-<<<<<<< HEAD
             href="#/contact"
-=======
-            href="#contact"
->>>>>>> 8064bd47d11cfaf68675ef31444ed4cfd66cf2c0
             className="nav-btn-talk"
             onClick={(e) => {
               e.preventDefault()

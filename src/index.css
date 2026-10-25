@@ -3266,12 +3266,8 @@ img {
 .testimonials-section>.container,
 .about-values-section>.container,
 .about-team-section>.container,
-<<<<<<< HEAD
 .services-methodology-section>.container,
 .contact-content-section>.container {
-=======
-.services-methodology-section>.container {
->>>>>>> 8064bd47d11cfaf68675ef31444ed4cfd66cf2c0
   position: relative;
   z-index: 2;
 }

@@ -100,7 +100,8 @@ function TiltServiceCard({ item, index, onNavigate }) {
     if (onNavigate) {
       onNavigate('services', item.category)
     } else {
-      window.location.hash = `#/services?category=${item.category}`
+      window.history.pushState(null, '', `/services?category=${item.category}`)
+      window.dispatchEvent(new PopStateEvent('popstate'))
     }
   }
 
@@ -200,14 +201,15 @@ export default function Services({ onNavigate }) {
           </p>
 
           <a 
-            href="#/services" 
+            href="/services" 
             className="btn-outline-dark"
             onClick={(e) => {
               e.preventDefault()
               if (onNavigate) {
                 onNavigate('services')
               } else {
-                window.location.hash = '#/services'
+                window.history.pushState(null, '', '/services')
+                window.dispatchEvent(new PopStateEvent('popstate'))
               }
             }}
           >

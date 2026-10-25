@@ -3,12 +3,12 @@ import { ArrowRight, Menu, X } from 'lucide-react'
 import { useGsapContext, applyMagneticEffect } from '../hooks/useGsap'
 
 const navLinks = [
-  { label: 'Home', id: 'home', href: '#/' },
-  { label: 'About', id: 'about', href: '#/about' },
-  { label: 'Services', id: 'services', href: '#/services' },
+  { label: 'Home', id: 'home', href: '/' },
+  { label: 'About', id: 'about', href: '/about' },
+  { label: 'Services', id: 'services', href: '/services' },
   { label: 'Work', id: 'work', href: '#work' },
   { label: 'Process', id: 'process', href: '#process' },
-  { label: 'Contact', id: 'contact', href: '#/contact' },
+  { label: 'Contact', id: 'contact', href: '/contact' },
 ]
 
 export default function Navbar({ currentRoute = 'home', onNavigate }) {
@@ -107,7 +107,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
       <div className="container navbar-inner">
         {/* Brand Logo */}
         <a
-          href="#/"
+          href="/"
           className="brand-logo"
           onClick={(e) => {
             e.preventDefault()
@@ -176,7 +176,7 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <a
             ref={talkBtnRef}
-            href="#/contact"
+            href="/contact"
             className="nav-btn-talk"
             onClick={(e) => {
               e.preventDefault()

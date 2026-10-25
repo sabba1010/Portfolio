@@ -290,7 +290,7 @@ export default function ContactPage({ onNavigateHome, onNavigate }) {
           {/* Breadcrumb Navigation */}
           <div className="contact-hero-breadcrumb">
             <a
-              href="#/"
+              href="/"
               className="breadcrumb-link"
               onClick={(e) => {
                 e.preventDefault()

@@ -15,16 +15,40 @@ import ContactPage from './components/ContactPage'
 import SmoothScroll from './components/SmoothScroll'
 
 export default function App() {
-  const [route, setRoute] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const hash = window.location.hash
-      if (hash.startsWith('#/about') || hash === '#about') return 'about'
-      if (hash.startsWith('#/services') || hash === '#services') return 'services'
-      if (hash.startsWith('#/contact') || hash === '#contact') return 'contact'
+  const getInitialRoute = () => {
+    if (typeof window === 'undefined') return 'home'
+
+    // Check pathname first
+    const path = window.location.pathname.toLowerCase()
+    if (path.startsWith('/about')) return 'about'
+    if (path.startsWith('/services')) return 'services'
+    if (path.startsWith('/contact')) return 'contact'
+
+    // Backwards compatibility for old hash links
+    const hash = window.location.hash
+    if (hash.startsWith('#/about') || hash === '#about') {
+      window.history.replaceState(null, '', '/about')
+      return 'about'
+    }
+    if (hash.startsWith('#/services') || hash === '#services') {
+      const qIdx = hash.indexOf('?')
+      const search = qIdx !== -1 ? hash.substring(qIdx) : ''
+      window.history.replaceState(null, '', `/services${search}`)
+      return 'services'
+    }
+    if (hash.startsWith('#/contact') || hash === '#contact') {
+      window.history.replaceState(null, '', '/contact')
+      return 'contact'
+    }
+    if (hash.startsWith('#/')) {
+      window.history.replaceState(null, '', '/')
       return 'home'
     }
+
     return 'home'
-  })
+  }
+
+  const [route, setRoute] = useState(getInitialRoute)
 
   const scrollToTop = () => {
     if (typeof window !== 'undefined') {
@@ -37,42 +61,58 @@ export default function App() {
   }
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash
-      if (hash.startsWith('#/about') || hash === '#about') {
+    const handleLocationChange = () => {
+      const path = window.location.pathname.toLowerCase()
+      if (path.startsWith('/about')) {
         setRoute('about')
         scrollToTop()
-      } else if (hash.startsWith('#/services') || hash === '#services') {
+      } else if (path.startsWith('/services')) {
         setRoute('services')
         scrollToTop()
-      } else if (hash.startsWith('#/contact') || hash === '#contact') {
+      } else if (path.startsWith('/contact')) {
         setRoute('contact')
         scrollToTop()
       } else {
         setRoute('home')
+        scrollToTop()
       }
     }
 
-    window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
+    window.addEventListener('popstate', handleLocationChange)
+
+    const handleHash = () => {
+      const hash = window.location.hash
+      if (hash.startsWith('#/about') || hash === '#about') {
+        navigate('about')
+      } else if (hash.startsWith('#/services') || hash === '#services') {
+        navigate('services')
+      } else if (hash.startsWith('#/contact') || hash === '#contact') {
+        navigate('contact')
+      }
+    }
+    window.addEventListener('hashchange', handleHash)
+
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange)
+      window.removeEventListener('hashchange', handleHash)
+    }
   }, [])
 
   const navigate = (newRoute, param) => {
     setRoute(newRoute)
+    let targetPath = '/'
     if (newRoute === 'about') {
-      window.history.pushState(null, '', '#/about')
-      scrollToTop()
+      targetPath = '/about'
     } else if (newRoute === 'services') {
-      const targetHash = param ? `#/services?category=${param}` : '#/services'
-      window.history.pushState(null, '', targetHash)
-      scrollToTop()
+      targetPath = param ? `/services?category=${param}` : '/services'
     } else if (newRoute === 'contact') {
-      window.history.pushState(null, '', '#/contact')
-      scrollToTop()
+      targetPath = '/contact'
     } else {
-      window.history.pushState(null, '', '#/')
-      scrollToTop()
+      targetPath = '/'
     }
+
+    window.history.pushState(null, '', targetPath)
+    scrollToTop()
   }
 
   return (

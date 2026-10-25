@@ -90,12 +90,15 @@ export default function Process({ onNavigate }) {
               complex creative ideas into high-converting, immersive digital products.
             </p>
             <a 
-              href="#/contact" 
+              href="/contact" 
               className="btn-outline-dark"
               onClick={(e) => {
                 e.preventDefault()
                 if (onNavigate) onNavigate('contact')
-                else window.location.hash = '#/contact'
+                else {
+                  window.history.pushState(null, '', '/contact')
+                  window.dispatchEvent(new PopStateEvent('popstate'))
+                }
               }}
             >
               <span>Our Process</span>

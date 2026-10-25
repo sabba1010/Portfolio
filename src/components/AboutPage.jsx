@@ -280,7 +280,7 @@ export default function AboutPage({ onNavigateHome, onNavigate }) {
         <div className="container about-hero-container">
           <div className="about-hero-breadcrumb">
             <a 
-              href="#/" 
+              href="/" 
               className="breadcrumb-link"
               onClick={(e) => {
                 e.preventDefault()

@@ -169,6 +169,14 @@ function TiltCard({ children, className = '' }) {
 export default function ServicesPage({ onNavigateHome }) {
   const getInitialCategory = () => {
     if (typeof window !== 'undefined') {
+      // 1. Check clean search params: /services?category=development
+      const searchParams = new URLSearchParams(window.location.search)
+      const queryCat = searchParams.get('category')
+      if (queryCat && ['design', 'packaging', 'development', 'cms'].includes(queryCat)) {
+        return queryCat
+      }
+
+      // 2. Backwards compatibility check for hash query params
       const hash = window.location.hash
       const qIdx = hash.indexOf('?')
       if (qIdx !== -1) {
@@ -214,8 +222,12 @@ export default function ServicesPage({ onNavigateHome }) {
       window.scrollTo(0, 0)
     }
 
+    window.addEventListener('popstate', handleCategoryCheck)
     window.addEventListener('hashchange', handleCategoryCheck)
-    return () => window.removeEventListener('hashchange', handleCategoryCheck)
+    return () => {
+      window.removeEventListener('popstate', handleCategoryCheck)
+      window.removeEventListener('hashchange', handleCategoryCheck)
+    }
   }, [])
 
   const filteredServices = activeCategory === 'all' 
@@ -298,7 +310,7 @@ export default function ServicesPage({ onNavigateHome }) {
         <div className="container services-hero-container">
           <div className="services-hero-breadcrumb">
             <a 
-              href="#/" 
+              href="/" 
               className="breadcrumb-link"
               onClick={(e) => {
                 e.preventDefault()

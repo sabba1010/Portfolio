@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { 
+  ArrowUp, 
+  ArrowUpRight, 
+  Mail, 
+  Globe,
+  ShieldCheck
+} from 'lucide-react'
 
-// Custom social SVG icons for pixel perfection and no external icon library discrepancies
+// Custom SVGs for pixel-perfect social icons matching luxury dark aesthetics
 function XTwitterIcon({ size = 15 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -35,144 +42,360 @@ function YoutubeIcon({ size = 16 }) {
   )
 }
 
-function MailIcon({ size = 15 }) {
+function GithubIcon({ size = 15 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
     </svg>
   )
 }
 
 export default function Footer({ onNavigate }) {
+  const [dhakaTime, setDhakaTime] = useState('')
+
+  // Live real-time studio clock for Dhaka HQ (UTC+6)
+  useEffect(() => {
+    const updateTime = () => {
+      try {
+        const now = new Date()
+        const formatter = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Dhaka',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true
+        })
+        setDhakaTime(formatter.format(now))
+      } catch {
+        setDhakaTime('LIVE')
+      }
+    }
+
+    updateTime()
+    const timer = setInterval(updateTime, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const handleScrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(0, { duration: 1.25 })
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    }
+  }
+
+  const handleLinkClick = (e, route, param) => {
+    e.preventDefault()
+    if (onNavigate) {
+      onNavigate(route, param)
+    } else {
+      let targetPath = '/'
+      if (route === 'about') targetPath = '/about'
+      else if (route === 'services') targetPath = param ? `/services?category=${param}` : '/services'
+      else if (route === 'contact') targetPath = '/contact'
+      window.history.pushState(null, '', targetPath)
+      handleScrollToTop()
+    }
+  }
+
   return (
-    <footer className="footer-section">
-      <div className="container footer-inner">
-        {/* Left: Brand Logo */}
-        <div 
-          className="brand-logo" 
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            if (onNavigate) {
-              onNavigate('home')
-            }
-          }}
-        >
-          <svg className="brand-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 9L19.5 25.5L25 18L13.5 9H7Z" fill="#111111" />
-            <path d="M19.5 25.5L33 9H27.5L19.5 21L15.5 16L19.5 25.5Z" fill="#FF5500" />
-            <path d="M19.5 25.5L24 31L33 9H28L19.5 25.5Z" fill="#FF6A1A" />
-          </svg>
-          <div className="brand-text-wrap">
-            <span className="brand-name" style={{ color: '#111111' }}>velotech</span>
-            <span className="brand-sub" style={{ color: '#646a78' }}>STUDIO</span>
+    <footer className="footer-section-premium">
+      {/* Ambient Radial Background Glow */}
+      <div className="footer-glow-aura" />
+      <div className="footer-top-accent-line" />
+
+      <div className="container footer-container-premium">
+        
+        {/* =================================================================
+            1. MAIN ARCHITECTURAL 4-COLUMN GRID
+            ================================================================= */}
+        <div className="footer-grid-premium">
+          {/* Column 1: Brand & Studio Identity */}
+          <div className="footer-col footer-col-brand">
+            <div 
+              className="brand-logo footer-brand-logo" 
+              style={{ cursor: 'pointer' }}
+              onClick={(e) => handleLinkClick(e, 'home')}
+            >
+              <svg className="brand-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 9L19.5 25.5L25 18L13.5 9H7Z" fill="#FFFFFF" />
+                <path d="M19.5 25.5L33 9H27.5L19.5 21L15.5 16L19.5 25.5Z" fill="#FF5500" />
+                <path d="M19.5 25.5L24 31L33 9H28L19.5 25.5Z" fill="#FF772A" />
+              </svg>
+              <div className="brand-text-wrap">
+                <span className="brand-name" style={{ color: '#ffffff' }}>velotech</span>
+                <span className="brand-sub" style={{ color: 'var(--color-orange)' }}>STUDIO</span>
+              </div>
+            </div>
+
+            <p className="footer-brand-desc">
+              Velotech Studio is an elite creative technology and 3D digital experience agency. 
+              We engineer spatial web experiences, WebGL shaders, transformative branding, 
+              and enterprise fullstack platforms for pioneering companies worldwide.
+            </p>
+
+            <div className="footer-badges-wrap">
+              <span className="footer-badge-pill">
+                <span className="pulse-indicator-dot" />
+                <span>Available for Global Commissions</span>
+              </span>
+              <span className="footer-badge-pill">
+                <Globe size={13} color="var(--color-orange)" />
+                <span>Dhaka HQ • {dhakaTime || 'UTC+6'}</span>
+              </span>
+              <span className="footer-badge-pill">
+                <ShieldCheck size={13} color="var(--color-orange)" />
+                <span>NDA Protected</span>
+              </span>
+            </div>
+          </div>
+
+          {/* Column 2: Navigation / Explore */}
+          <div className="footer-col footer-col-nav">
+            <h4 className="footer-col-title">Navigation</h4>
+            <ul className="footer-links-list">
+              <li>
+                <a href="/" onClick={(e) => handleLinkClick(e, 'home')} className="footer-nav-link">
+                  <span className="footer-link-bullet" />
+                  <span>Home</span>
+                </a>
+              </li>
+              <li>
+                <a href="/about" onClick={(e) => handleLinkClick(e, 'about')} className="footer-nav-link">
+                  <span className="footer-link-bullet" />
+                  <span>About Studio</span>
+                </a>
+              </li>
+              <li>
+                <a href="/services" onClick={(e) => handleLinkClick(e, 'services')} className="footer-nav-link">
+                  <span className="footer-link-bullet" />
+                  <span>Capabilities</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#work" 
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (onNavigate) onNavigate('home')
+                    setTimeout(() => {
+                      const el = document.getElementById('work')
+                      if (el) {
+                        if (window.__lenis) {
+                          window.__lenis.scrollTo(el, { offset: -70, duration: 1.2 })
+                        } else {
+                          el.scrollIntoView({ behavior: 'smooth' })
+                        }
+                      }
+                    }, 120)
+                  }} 
+                  className="footer-nav-link"
+                >
+                  <span className="footer-link-bullet" />
+                  <span>Selected Works</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#process" 
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (onNavigate) onNavigate('home')
+                    setTimeout(() => {
+                      const el = document.getElementById('process')
+                      if (el) {
+                        if (window.__lenis) {
+                          window.__lenis.scrollTo(el, { offset: -70, duration: 1.2 })
+                        } else {
+                          el.scrollIntoView({ behavior: 'smooth' })
+                        }
+                      }
+                    }, 120)
+                  }} 
+                  className="footer-nav-link"
+                >
+                  <span className="footer-link-bullet" />
+                  <span>Our Methodology</span>
+                </a>
+              </li>
+              <li>
+                <a href="/contact" onClick={(e) => handleLinkClick(e, 'contact')} className="footer-nav-link">
+                  <span className="footer-link-bullet" />
+                  <span>Contact Us</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Capabilities & Services */}
+          <div className="footer-col footer-col-services">
+            <h4 className="footer-col-title">Capabilities</h4>
+            <ul className="footer-links-list">
+              <li>
+                <a 
+                  href="/services?category=development" 
+                  onClick={(e) => handleLinkClick(e, 'services', 'development')} 
+                  className="footer-nav-link"
+                >
+                  <span className="footer-link-bullet" />
+                  <span>Custom Web Development</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/services?category=design" 
+                  onClick={(e) => handleLinkClick(e, 'services', 'design')} 
+                  className="footer-nav-link"
+                >
+                  <span className="footer-link-bullet" />
+                  <span>Graphic Design & Brand Systems</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/services?category=packaging" 
+                  onClick={(e) => handleLinkClick(e, 'services', 'packaging')} 
+                  className="footer-nav-link"
+                >
+                  <span className="footer-link-bullet" />
+                  <span>Packaging & 3D Tactile Visualization</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/services?category=cms" 
+                  onClick={(e) => handleLinkClick(e, 'services', 'cms')} 
+                  className="footer-nav-link"
+                >
+                  <span className="footer-link-bullet" />
+                  <span>Shopify / WordPress / Wix</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Studio Connect & Touchpoints */}
+          <div className="footer-col footer-col-connect">
+            <h4 className="footer-col-title">Studio Connect</h4>
+            
+            <div className="footer-contact-card">
+              <span className="contact-card-label">OFFICIAL INBOX</span>
+              <a href="mailto:velotecltd@gmail.com" className="contact-card-email">
+                velotecltd@gmail.com
+                <ArrowUpRight size={14} className="email-arrow" />
+              </a>
+              <span className="contact-card-note">Fast response guaranteed within 2 hours</span>
+            </div>
+
+            <div className="footer-social-section">
+              <span className="footer-social-label">DIGITAL PRESENCE</span>
+              <div className="footer-social-row">
+                <a 
+                  href="mailto:velotecltd@gmail.com" 
+                  className="premium-social-link" 
+                  aria-label="Direct Email" 
+                  title="velotecltd@gmail.com"
+                >
+                  <Mail size={15} />
+                </a>
+                <a 
+                  href="https://x.com" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="premium-social-link" 
+                  aria-label="X (Twitter)"
+                  title="Twitter / X"
+                >
+                  <XTwitterIcon size={14} />
+                </a>
+                <a 
+                  href="https://instagram.com" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="premium-social-link" 
+                  aria-label="Instagram"
+                  title="Instagram"
+                >
+                  <InstagramIcon size={15} />
+                </a>
+                <a 
+                  href="https://linkedin.com" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="premium-social-link" 
+                  aria-label="LinkedIn"
+                  title="LinkedIn"
+                >
+                  <LinkedinIcon size={15} />
+                </a>
+                <a 
+                  href="https://youtube.com" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="premium-social-link" 
+                  aria-label="YouTube"
+                  title="YouTube"
+                >
+                  <YoutubeIcon size={16} />
+                </a>
+                <a 
+                  href="https://github.com" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="premium-social-link" 
+                  aria-label="GitHub"
+                  title="GitHub"
+                >
+                  <GithubIcon size={15} />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Center: Navigation */}
-        <ul className="footer-nav-list">
-          <li className="footer-nav-item">
-            <a 
-              href="#/" 
-              onClick={(e) => {
-                e.preventDefault()
-                if (onNavigate) {
-                  onNavigate('home')
-                }
-              }}
-            >
-              Home
-            </a>
-          </li>
-          <li className="footer-nav-item">
-            <a 
-              href="#/about" 
-              onClick={(e) => {
-                e.preventDefault()
-                if (onNavigate) {
-                  onNavigate('about')
-                }
-              }}
-            >
-              About
-            </a>
-          </li>
-          <li className="footer-nav-item">
-            <a 
-              href="#/services" 
-              onClick={(e) => {
-                e.preventDefault()
-                if (onNavigate) {
-                  onNavigate('services')
-                }
-              }}
-            >
-              Services
-            </a>
-          </li>
-          <li className="footer-nav-item">
-            <a 
-              href="#work" 
-              onClick={(e) => {
-                e.preventDefault()
-                const scrollToWork = () => {
-                  const el = document.getElementById('work')
-                  if (el) {
-                    if (window.__lenis) {
-                      window.__lenis.scrollTo(el, { offset: -70, duration: 1.25 })
-                    } else {
-                      el.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  }
-                }
-
-                if (onNavigate) {
-                  onNavigate('home')
-                }
-                setTimeout(scrollToWork, 120)
-              }}
-            >
-              Work
-            </a>
-          </li>
-          <li className="footer-nav-item">
-            <a 
-              href="#/contact" 
-              onClick={(e) => {
-                e.preventDefault()
-                if (onNavigate) {
-                  onNavigate('contact')
-                }
-              }}
-            >
-              Contact
-            </a>
-          </li>
-        </ul>
-
-        {/* Right: Contact & Social Icons */}
-        <div className="footer-social-group">
-          <a href="mailto:velotecltd@gmail.com" className="social-circle-link" aria-label="Email: velotecltd@gmail.com" title="velotecltd@gmail.com">
-            <MailIcon size={15} />
-          </a>
-          <a href="https://x.com" target="_blank" rel="noreferrer" className="social-circle-link" aria-label="X (Twitter)">
-            <XTwitterIcon size={14} />
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-circle-link" aria-label="Instagram">
-            <InstagramIcon size={15} />
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="social-circle-link" aria-label="LinkedIn">
-            <LinkedinIcon size={15} />
-          </a>
-          <a href="https://youtube.com" target="_blank" rel="noreferrer" className="social-circle-link" aria-label="YouTube">
-            <YoutubeIcon size={16} />
-          </a>
+        {/* =================================================================
+            2. GIANT AESTHETIC WATERMARK TEXT
+            ================================================================= */}
+        <div className="footer-giant-watermark" aria-hidden="true">
+          <span>VELOTECH STUDIO</span>
         </div>
 
-        {/* Far Right: Copyright */}
-        <div className="footer-copyright">
-          © 2026 Velotech Studio. All rights reserved.
+        {/* =================================================================
+            3. PRECISION BOTTOM BAR
+            ================================================================= */}
+        <div className="footer-bottom-bar-premium">
+          <div className="footer-copyright-text">
+            © {new Date().getFullYear()} Velotech Studio Ltd. All rights reserved.
+          </div>
+
+          <div className="footer-tech-stamp">
+            <span className="tech-stamp-dot" />
+            <span>Crafted with Three.js, React & GSAP</span>
+          </div>
+
+          <div className="footer-bottom-right-group">
+            <div className="footer-legal-links">
+              <a href="/about" onClick={(e) => handleLinkClick(e, 'about')}>Privacy Policy</a>
+              <span className="legal-sep">•</span>
+              <a href="/about" onClick={(e) => handleLinkClick(e, 'about')}>Terms</a>
+            </div>
+
+            <button 
+              type="button" 
+              className="footer-back-to-top-btn"
+              onClick={handleScrollToTop}
+              title="Return to the top of the page"
+            >
+              <span>Back to top</span>
+              <div className="back-to-top-icon-wrap">
+                <ArrowUp size={13} strokeWidth={2.5} />
+              </div>
+            </button>
+          </div>
         </div>
+
       </div>
     </footer>
   )

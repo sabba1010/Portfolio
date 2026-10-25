@@ -8,7 +8,7 @@ const navLinks = [
   { label: 'Services', id: 'services', href: '#/services' },
   { label: 'Work', id: 'work', href: '#work' },
   { label: 'Process', id: 'process', href: '#process' },
-  { label: 'Contact', id: 'contact', href: '#contact' },
+  { label: 'Contact', id: 'contact', href: '#/contact' },
 ]
 
 export default function Navbar({ currentRoute = 'home', onNavigate }) {
@@ -67,6 +67,11 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
       e.preventDefault()
       if (onNavigate) {
         onNavigate('services')
+      }
+    } else if (link.id === 'contact') {
+      e.preventDefault()
+      if (onNavigate) {
+        onNavigate('contact')
       }
     } else if (link.id === 'home') {
       e.preventDefault()
@@ -130,7 +135,9 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
                 ? link.id === 'about'
                 : currentRoute === 'services'
                   ? link.id === 'services'
-                  : (activeSection === link.id && link.id !== 'about' && link.id !== 'services')
+                  : currentRoute === 'contact'
+                    ? link.id === 'contact'
+                    : (activeSection === link.id && link.id !== 'about' && link.id !== 'services' && link.id !== 'contact')
 
               return (
                 <li key={link.label} className="nav-link-item">
@@ -169,28 +176,12 @@ export default function Navbar({ currentRoute = 'home', onNavigate }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <a
             ref={talkBtnRef}
-            href="#contact"
+            href="#/contact"
             className="nav-btn-talk"
             onClick={(e) => {
               e.preventDefault()
-              const scrollToContact = () => {
-                const el = document.getElementById('contact')
-                if (el) {
-                  if (window.__lenis) {
-                    window.__lenis.scrollTo(el, { offset: -70, duration: 1.25 })
-                  } else {
-                    el.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }
-              }
-
-              if (currentRoute !== 'home') {
-                if (onNavigate) {
-                  onNavigate('home')
-                }
-                setTimeout(scrollToContact, 120)
-              } else {
-                scrollToContact()
+              if (onNavigate) {
+                onNavigate('contact')
               }
             }}
           >

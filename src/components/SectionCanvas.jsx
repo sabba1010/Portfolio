@@ -70,6 +70,14 @@ export default function SectionCanvas({ variant = 'constellation', className = '
     }
     window.addEventListener('resize', onResize)
 
+    let resizeObserver = null
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => {
+        onResize()
+      })
+      resizeObserver.observe(container)
+    }
+
     let updateVariant = () => {}
     let cleanupVariant = () => {}
 
@@ -191,33 +199,46 @@ export default function SectionCanvas({ variant = 'constellation', className = '
     }
 
     // =========================================================================
-    // VARIANT: WAVE (Undulating 3D Particle Mesh Ribbon)
+    // VARIANT: WAVE (Full-Section 3D Dynamic Undulating Particle Ocean)
     // =========================================================================
     else if (variant === 'wave') {
-      const cols = 38
-      const rows = 24
+      const cols = 100
+      const rows = 65
       const count = cols * rows
       const positions = new Float32Array(count * 3)
+      const colors = new Float32Array(count * 3)
 
-      const spacingX = 0.35
-      const spacingZ = 0.35
-      const offsetX = ((cols - 1) * spacingX) / 2
-      const offsetZ = ((rows - 1) * spacingZ) / 2
+      const spacingX = 0.45
+      const totalWidth = (cols - 1) * spacingX
+      const offsetX = totalWidth / 2
+
+      const zMin = -18.0
+      const zMax = 8.0
+      const totalDepth = zMax - zMin
+      const stepZ = totalDepth / (rows - 1)
 
       for (let r = 0; r < rows; r++) {
+        const z = zMin + r * stepZ
         for (let c = 0; c < cols; c++) {
           const idx = (r * cols + c) * 3
           positions[idx + 0] = c * spacingX - offsetX
           positions[idx + 1] = 0
-          positions[idx + 2] = r * spacingZ - offsetZ
+          positions[idx + 2] = z
+
+          // Initial warm orange tint
+          colors[idx + 0] = 1.0
+          colors[idx + 1] = 0.42
+          colors[idx + 2] = 0.06
         }
       }
 
       const waveGeo = new THREE.BufferGeometry()
       waveGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+      waveGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3))
 
       const waveMat = new THREE.PointsMaterial({
-        size: 0.15,
+        size: 0.18,
+        vertexColors: true,
         map: particleTexture,
         transparent: true,
         blending: THREE.AdditiveBlending,
@@ -225,8 +246,8 @@ export default function SectionCanvas({ variant = 'constellation', className = '
       })
 
       const waveSystem = new THREE.Points(waveGeo, waveMat)
-      waveSystem.rotation.x = 1.05
-      waveSystem.position.y = -1.2
+      waveSystem.rotation.x = 1.12
+      waveSystem.position.set(0, -1.8, 0)
       scene.add(waveSystem)
 
       const clock = new THREE.Clock()
@@ -234,27 +255,64 @@ export default function SectionCanvas({ variant = 'constellation', className = '
       updateVariant = () => {
         const time = clock.getElapsedTime()
         const pos = waveGeo.attributes.position.array
+        const col = waveGeo.attributes.color.array
+
+        // Project mouse position onto wave plane coordinates for interaction
+        const targetWaveX = mouse.x * 12
+        const targetWaveZ = mouse.y * 6 - 4
 
         for (let r = 0; r < rows; r++) {
+          const normZ = r / (rows - 1)
+          const edgeZ = Math.sin(normZ * Math.PI)
+
           for (let c = 0; c < cols; c++) {
             const idx = (r * cols + c) * 3
             const x = pos[idx + 0]
             const z = pos[idx + 2]
+            const normX = c / (cols - 1)
+            const edgeX = Math.sin(normX * Math.PI)
+            // Soft perimeter fade only at the outer 4% boundary
+            const edgeFade = Math.pow(Math.min(1, Math.max(0, edgeX * edgeZ * 2.2)), 0.35)
 
-            // Dynamic sine wave height calculation
-            pos[idx + 1] = 
-              Math.sin(x * 0.55 + time * 1.4) * 0.42 +
-              Math.cos(z * 0.65 + time * 1.1) * 0.35 +
-              Math.sin((x + z) * 0.3 + time * 0.8) * 0.22
+            // Multi-harmonic undulating 3D wave calculation
+            const wave1 = Math.sin(x * 0.22 + time * 1.25) * 0.55
+            const wave2 = Math.cos(z * 0.26 + time * 1.0) * 0.45
+            const wave3 = Math.sin((x * 0.15 + z * 0.18) + time * 0.8) * 0.32
+            const wave4 = Math.cos((x * 0.3 - z * 0.2) + time * 1.3) * 0.15
+
+            // Interactive mouse ripple physics
+            const dx = x - targetWaveX
+            const dz = z - targetWaveZ
+            const distToMouse = Math.sqrt(dx * dx + dz * dz)
+            const mouseRipple = distToMouse < 6 
+              ? Math.sin(distToMouse * 1.6 - time * 3.5) * (1 - distToMouse / 6) * 0.35 
+              : 0
+
+            const elevation = wave1 + wave2 + wave3 + wave4 + mouseRipple
+            pos[idx + 1] = elevation
+
+            // Volumetric dynamic color grading:
+            // High wave crests = glowing warm gold/amber (#ffaa2a)
+            // Mid-elevation = signature electric orange (#ff5500)
+            // Low troughs = deep incandescent volcanic ember (#b82800)
+            const hNorm = THREE.MathUtils.clamp((elevation + 0.95) / 1.9, 0, 1)
+            const rCol = THREE.MathUtils.lerp(0.78, 1.0, hNorm) * edgeFade
+            const gCol = THREE.MathUtils.lerp(0.18, 0.65, hNorm) * edgeFade
+            const bCol = THREE.MathUtils.lerp(0.02, 0.22, hNorm) * edgeFade
+
+            col[idx + 0] = rCol
+            col[idx + 1] = gCol
+            col[idx + 2] = bCol
           }
         }
 
         waveGeo.attributes.position.needsUpdate = true
+        waveGeo.attributes.color.needsUpdate = true
 
-        // Gentle camera tilt
-        camera.position.x = mouse.x * 0.5
-        camera.position.y = 0.8 - mouse.y * 0.3
-        camera.lookAt(0, -0.8, 0)
+        // Smooth responsive 3D camera parallax
+        camera.position.x = mouse.x * 0.8
+        camera.position.y = 0.8 - mouse.y * 0.4
+        camera.lookAt(0, -0.6, 0)
       }
 
       cleanupVariant = () => {
@@ -357,6 +415,7 @@ export default function SectionCanvas({ variant = 'constellation', className = '
     // 5. Unmount Cleanup
     return () => {
       observer.disconnect()
+      if (resizeObserver) resizeObserver.disconnect()
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('resize', onResize)
       cancelAnimationFrame(animationFrameId)

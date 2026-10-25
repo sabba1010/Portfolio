@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { ArrowRight, Sparkles, Send, CheckCircle, X } from 'lucide-react'
 import { useGsapContext, applyMagneticEffect } from '../hooks/useGsap'
 
-export default function CtaBanner() {
+export default function CtaBanner({ onNavigate }) {
   const [modalOpen, setModalOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
@@ -138,7 +138,13 @@ export default function CtaBanner() {
             
             <button 
               ref={ctaBtnRef}
-              onClick={() => setModalOpen(true)}
+              onClick={() => {
+                if (onNavigate) {
+                  onNavigate('contact')
+                } else {
+                  setModalOpen(true)
+                }
+              }}
               className="btn-primary-orange"
               style={{ fontSize: '15px', padding: '10px 12px 10px 28px', cursor: 'pointer' }}
             >

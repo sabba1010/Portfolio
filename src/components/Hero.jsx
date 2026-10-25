@@ -87,8 +87,8 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero-section" ref={heroRef}>
-      {/* Three.js 3D Background Magma Embers & Particles */}
-      <HeroCanvas />
+      {/* Three.js 3D Background Magma Embers & Particles (Right-focused around 3D Robot) */}
+      <HeroCanvas mode="right" />
 
       {/* Hero Content Grid */}
       <div className="container hero-content-grid">

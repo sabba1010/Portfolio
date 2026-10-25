@@ -128,24 +128,12 @@ export default function Footer({ onNavigate }) {
           </li>
           <li className="footer-nav-item">
             <a 
-              href="#contact" 
+              href="#/contact" 
               onClick={(e) => {
                 e.preventDefault()
-                const scrollToContact = () => {
-                  const el = document.getElementById('contact')
-                  if (el) {
-                    if (window.__lenis) {
-                      window.__lenis.scrollTo(el, { offset: -70, duration: 1.25 })
-                    } else {
-                      el.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  }
-                }
-
                 if (onNavigate) {
-                  onNavigate('home')
+                  onNavigate('contact')
                 }
-                setTimeout(scrollToContact, 120)
               }}
             >
               Contact

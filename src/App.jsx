@@ -11,6 +11,7 @@ import ScrollProgress from './components/ScrollProgress'
 import CustomCursor from './components/CustomCursor'
 import AboutPage from './components/AboutPage'
 import ServicesPage from './components/ServicesPage'
+import ContactPage from './components/ContactPage'
 import SmoothScroll from './components/SmoothScroll'
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
       const hash = window.location.hash
       if (hash === '#/about' || hash === '#about') return 'about'
       if (hash === '#/services' || hash === '#services') return 'services'
+      if (hash === '#/contact' || hash === '#contact') return 'contact'
       return 'home'
     }
     return 'home'
@@ -43,6 +45,9 @@ export default function App() {
       } else if (hash === '#/services' || hash === '#services') {
         setRoute('services')
         scrollToTop()
+      } else if (hash === '#/contact' || hash === '#contact') {
+        setRoute('contact')
+        scrollToTop()
       } else {
         setRoute('home')
       }
@@ -60,6 +65,9 @@ export default function App() {
     } else if (newRoute === 'services') {
       window.history.pushState(null, '', '#/services')
       scrollToTop()
+    } else if (newRoute === 'contact') {
+      window.history.pushState(null, '', '#/contact')
+      scrollToTop()
     } else {
       window.history.pushState(null, '', '#/')
       scrollToTop()
@@ -74,9 +82,11 @@ export default function App() {
       <Navbar currentRoute={route} onNavigate={navigate} />
       <main>
         {route === 'about' ? (
-          <AboutPage onNavigateHome={() => navigate('home')} />
+          <AboutPage onNavigateHome={() => navigate('home')} onNavigate={navigate} />
         ) : route === 'services' ? (
-          <ServicesPage onNavigateHome={() => navigate('home')} />
+          <ServicesPage onNavigateHome={() => navigate('home')} onNavigate={navigate} />
+        ) : route === 'contact' ? (
+          <ContactPage onNavigateHome={() => navigate('home')} onNavigate={navigate} />
         ) : (
           <>
             <Hero />
@@ -84,7 +94,7 @@ export default function App() {
             <FeaturedProjects />
             <Process />
             <Testimonials />
-            <CtaBanner />
+            <CtaBanner onNavigate={navigate} />
           </>
         )}
       </main>
@@ -93,3 +103,4 @@ export default function App() {
     </SmoothScroll>
   )
 }
+

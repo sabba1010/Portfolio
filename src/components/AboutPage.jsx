@@ -178,7 +178,7 @@ function TiltCard({ children, className = '' }) {
   )
 }
 
-export default function AboutPage({ onNavigateHome }) {
+export default function AboutPage({ onNavigateHome, onNavigate }) {
   const pageRef = useRef(null)
 
   useEffect(() => {
@@ -275,7 +275,7 @@ export default function AboutPage({ onNavigateHome }) {
           1. ABOUT HERO SECTION (with Three.js Volcanic Embers)
           ================================================================= */}
       <section className="about-hero-section">
-        <HeroCanvas />
+        <HeroCanvas mode="full" />
 
         <div className="container about-hero-container">
           <div className="about-hero-breadcrumb">
@@ -543,7 +543,7 @@ export default function AboutPage({ onNavigateHome }) {
       {/* =================================================================
           7. CTA BANNER
           ================================================================= */}
-      <CtaBanner />
+      <CtaBanner onNavigate={onNavigate} />
     </div>
   )
 }

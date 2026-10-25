@@ -240,7 +240,7 @@ export default function ServicesPage({ onNavigateHome }) {
           1. SERVICES HERO (with Volcanic Three.js Embers)
           ================================================================= */}
       <section className="services-hero-section">
-        <HeroCanvas />
+        <HeroCanvas mode="full" />
 
         <div className="container services-hero-container">
           <div className="services-hero-breadcrumb">
